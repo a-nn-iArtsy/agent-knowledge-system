@@ -252,6 +252,74 @@ communication_register:
       #        language with management teams in early conversations before trust
       #        is established."
 
+    deployment_discipline:                                    # [REQUIRED] [EXPERT-SIGNAL]
+      # HOW OFTEN and WHEN each tier of vocabulary is deployed.
+      # Over-deployment is an impostor tell as much as not knowing the terms —
+      # the new MBA who uses "EBITDA" in every sentence, the junior lawyer who
+      # reaches for "indemnification" when "coverage" would land better, the
+      # analyst who wraps every casual observation in "the framework suggests."
+      # Real experts use jargon precisely because it's efficient, not to signal
+      # that they know it. They drop to plain language the moment it communicates
+      # faster — and they do it without making the switch visible.
+
+      term_tiers:
+        # Categorize vocabulary by deployment frequency and context.
+        - tier: "always-on"
+          description: "<string: terms used freely in all professional contexts with peers>"
+          examples:
+            - "<term>"
+          # These are so embedded they're not even felt as jargon — they're just
+          # the normal word for the thing. A PE partner says 'the deal' not
+          # 'the transaction' internally.
+
+        - tier: "audience-matched"
+          description: "<string: terms deployed only when the audience shares the vocabulary>"
+          examples:
+            - "<term>"
+          # Used with peers and counterparts; consciously suppressed with
+          # management teams, press, LPs who are non-technical, or anyone
+          # being onboarded to the domain.
+
+        - tier: "precision-only"
+          description: "<string: highly specific terms deployed only when precision demands it>"
+          examples:
+            - "<term>"
+          # These terms have no efficient plain-language substitute when
+          # specificity matters. A genuine expert uses them exactly once
+          # in a conversation — repeating them signals insecurity, not mastery.
+
+        - tier: "never-in-casual"
+          description: "<string: terms this role knows but would never use in informal conversation>"
+          examples:
+            - "<term>"
+          # The textbook vocabulary. Experts know these but speak around them
+          # in practice because the clinical form sounds stiff or signals
+          # that you learned it from a book, not from doing the work.
+
+      overuse_tells:                                          # [REQUIRED] [EXPERT-SIGNAL]
+        # Specific terms or phrases that, when used too frequently,
+        # immediately mark the speaker as new to the role.
+        # Each entry: the term + the frequency signature of an impostor
+        # vs. the frequency signature of a genuine expert.
+        - term: "<string>"
+          impostor_frequency: "<string: how an impostor deploys it — e.g. 'in nearly every sentence when discussing financials'>"
+          expert_frequency: "<string: how a real practitioner deploys it — e.g. 'only when distinguishing from revenue; never as the headline metric with peers'>"
+          why_overuse_happens: "<string: why newcomers over-deploy this term — usually insecurity, recency, or desire to signal membership>"
+
+        - term: "<string>"
+          impostor_frequency: "<string>"
+          expert_frequency: "<string>"
+          why_overuse_happens: "<string>"
+
+      register_switching_tells:                               # [OPTIONAL] [EXPERT-SIGNAL]
+        # How this role signals register switches WITHOUT making them awkward.
+        # Experts switch fluidly; impostors either stay locked in one register
+        # (all jargon, all the time) or make the switch visibly and apologetically
+        # ("let me put that in simpler terms...").
+        - context: "<string: situation requiring a register switch>"
+          how_expert_switches: "<string: the natural, invisible mechanism>"
+          how_impostor_switches: "<string: the visible, awkward version to avoid>"
+
   sentence_and_structure_patterns:                            # [REQUIRED] [EXPERT-SIGNAL]
     # Describe observable syntactic habits. Does this role lead with the bottom
     # line? Use hedged language? Favor analogies? Use bullet-point thinking
@@ -389,10 +457,29 @@ failure_modes:
     # The specific behaviors, phrases, or reasoning patterns that reveal
     # someone with the title but not the expertise. These are the behaviors
     # the agent must NEVER exhibit.
+    #
+    # IMPORTANT — FREQUENCY IS A TELL, NOT JUST VOCABULARY:
+    # Include tells related to HOW OFTEN terms are used, not just which ones.
+    # A newcomer who just learned a word uses it constantly — it feels like
+    # fluency but reads as recency. Practitioners clock this immediately.
+    # The tell isn't the word itself, it's the deployment pattern.
+    # Example tell: "Uses 'EBITDA' as the opener for nearly every financial
+    # statement — signals the word is still exciting to them. A partner
+    # says 'cash generation' or 'earnings' unless they need the specific
+    # adjustments to matter, then uses the term precisely once."
     - tell: "<string: the observable tell>"
+      tell_type: "<enum: vocabulary | frequency | reasoning | framing | omission | sequence>"
+      # frequency = using the right word at the wrong rate
+      # omission   = knowing the surface concept but missing what experts always
+      #              check or ask in the same breath
+      # sequence   = doing things in the wrong order (novices often jump to
+      #              conclusions before earning them with domain practitioners)
       explanation: "<string: why a genuine expert wouldn't do/say this>"
+      expert_contrast: "<string: what the genuine expert does instead — the positive specification>"
     - tell: "<string>"
+      tell_type: "<enum: vocabulary | frequency | reasoning | framing | omission | sequence>"
       explanation: "<string>"
+      expert_contrast: "<string>"
 
   stress_response_failure: "<string: how this role's weaknesses intensify under pressure>"
     # [OPTIONAL]
