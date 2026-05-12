@@ -1,0 +1,124 @@
+# ============================================================
+# REVIEW-ME SUBMISSION TEMPLATE
+# Version: 1.0
+#
+# PURPOSE: When an agent building a persona adds fields beyond
+# the canonical template, they reverse-engineer a generalized
+# version of those fields and submit it here for human review.
+#
+# A human reviewer reads this and decides:
+#   PROMOTE  → add the generalized field to the canonical template
+#   VARIANT  → add as a typed variant delta (e.g., only for game-dev agents)
+#   REJECT   → too specific; leave in the role file, don't generalize
+#   DEFER    → good idea but needs more examples before promoting
+#
+# NAMING CONVENTION for submission files:
+#   [role-slug]--[field-slug]--[YYYY-MM-DD].yaml
+#   Example: roblox-developer--exploit-surface-awareness--2026-05-12.yaml
+# ============================================================
+
+submission:
+
+  # ── METADATA ────────────────────────────────────────────────
+  submission_id: "<role-slug>--<field-slug>--<YYYY-MM-DD>"
+  submitted_date: "<YYYY-MM-DD>"
+  submitted_by_task: "<the agent task description that generated this>"
+  # Example: "Build Roblox Developer persona"
+
+  source_role: "<role slug where this field was first used>"
+  source_domain: "<domain of the source role>"
+  source_file: "<path to the role file where the original field lives>"
+
+
+  # ── ORIGINAL FIELD (domain-specific) ────────────────────────
+  original:
+    field_name: "<exact field name as it appears in the role file>"
+    field_path: "<where in the template it was added>"
+    # Example: "profile.yaml > cognitive_style > [new field]"
+    # Example: "knowledge-tree.yaml > node > [new field on node schema]"
+    # Example: "skill.yaml > [new section]"
+
+    domain_specific_version: |
+      # Paste the field as written in the role file — inline comments included.
+      # This is the raw, specific version.
+
+    why_it_was_added: |
+      # Why does this role need this field that the canonical template doesn't have?
+      # What meaningful gap does it fill?
+      # What would be missing from the role's expert representation without it?
+
+    example_fill: |
+      # How was this field filled in for the source role?
+      # Show a real filled value, not a placeholder.
+      # This is the evidence that the field is useful, not just theoretical.
+
+
+  # ── GENERALIZED VERSION (reverse-engineered) ────────────────
+  generalized:
+    proposed_field_name: "<generalized name — no domain-specific terms>"
+    # Transform domain jargon into transferable concepts.
+    # "exploit_surface_awareness" → "adversarial_input_surface_awareness"
+    # "studio_pipeline_checkpoints" → "tool_pipeline_verification_gates"
+    # "lp_communication_cadence" → "principal_stakeholder_communication_cadence"
+
+    generalized_definition: |
+      # What does this field capture in domain-agnostic language?
+      # Should be understandable to someone who knows nothing about the source domain.
+
+    underlying_pattern: "<one sentence: the abstract pattern this field captures>"
+    # This is the most important field. It should complete the sentence:
+    # "This field captures the pattern of: ___"
+    # Example: "Recognizing and pre-empting known attack vectors specific to
+    #            the operating environment of this role"
+    # Example: "Verifying tool-chain state at defined gates before proceeding"
+    # Example: "Adapting communication register based on principal vs. agent relationship"
+
+    applies_to_domains:
+      - "<domain>"
+      - "<domain>"
+    # Which domains would benefit from this field on their roles?
+    # Be honest — if it's only useful in 2 domains, say so.
+
+    applies_to_template: "<agent-profile | skill | knowledge-tree | relationship | all>"
+    # Which template file would this field be added to?
+
+    proposed_location_in_template: "<section > subsection>"
+    # Where in the target template does this field belong?
+    # Example: "profile.yaml > cognitive_style"
+    # Example: "skill.yaml > [new section: environmental_constraints]"
+
+    example_fills_across_domains:
+      # Show how this generalized field would be filled for 2+ different domains.
+      # If you can only think of one domain, the field may be too specific to generalize.
+      - domain: "<domain>"
+        role: "<role>"
+        example_fill: |
+          # How would this field be filled for this domain/role?
+      - domain: "<domain>"
+        role: "<role>"
+        example_fill: |
+
+    risks_of_generalizing: |
+      # What could go wrong if this field is added to the canonical template?
+      # Would it create noise for domains where it doesn't apply?
+      # Could it be misused or filled shallowly?
+
+
+  # ── REVIEWER DECISION ───────────────────────────────────────
+  # (Filled in by the human reviewer, not the agent)
+  reviewer_decision:
+    decision: "<PROMOTE | VARIANT | REJECT | DEFER>"
+    reviewer: "<name or initials>"
+    review_date: "<YYYY-MM-DD>"
+    decision_notes: |
+      # Why this decision was made.
+      # If PROMOTE: which template version to add it to, any modifications.
+      # If VARIANT: which template type it applies to (e.g., only game-dev agents).
+      # If REJECT: why not worth generalizing (too specific, low signal, etc.)
+      # If DEFER: what additional examples or evidence would change this to PROMOTE.
+
+    if_promoted:
+      target_template: "<path to template file>"
+      target_section: "<section in that template>"
+      template_version_bump: "<e.g. 1.0 → 1.1>"
+      pr_or_commit: "<link to the commit where this was added>"
