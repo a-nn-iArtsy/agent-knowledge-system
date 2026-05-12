@@ -1,0 +1,593 @@
+# ============================================================
+# PERSONA VARIANT TEMPLATE SCAFFOLD v1.0
+# Professional Agent Knowledge System
+#
+# PURPOSE: Capture how a specific named individual DIVERGES
+# from the standard archetype for their professional role.
+# This is NOT a biography. It is a behavioral and epistemic
+# delta map — a structured override layer applied on top of
+# a base role archetype.
+#
+# A completed variant enables an AI to:
+#   1. Predict how this person approaches a novel problem
+#   2. Recognize their reasoning in an unlabeled text sample
+#   3. Identify questions they ask that a standard archetype would not
+#   4. Understand what evidence would and would not move them
+#   5. Communicate with their specific texture of intellectual precision
+#
+# RESEARCH BASIS:
+#   - Intelligence community target-centric profiling (ODNI ICD-610)
+#   - Screenwriting character bible methodology
+#   - Nielsen Norman Group persona methodology
+#   - Jobs-to-Be-Done framework
+#   - Big Five / OCEAN applied to professional decision patterns
+#   - Primary source documentation norms (shareholder letters,
+#     investment memos, court filings, documented interviews)
+# ============================================================
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 1: VARIANT IDENTITY
+# ─────────────────────────────────────────────────────────────
+
+variant_id: "<LASTNAME_FIRSTNAME_ROLE_ORGSLUG>"
+# Unique machine-readable identifier.
+# Convention: BUFFETT_WARREN_INVESTOR_BRK
+# Uppercase, no spaces, no special characters.
+# Used for routing and inheritance lookup.
+
+variant_label: "<Display Name — Role at Organization>"
+# Human-readable label shown in system UI and logs.
+# Example: "Howard Marks — CIO, Oaktree Capital"
+
+schema_version: "1.0"
+last_updated: "<YYYY-MM-DD>"
+authored_by: "<analyst_id or team_id>"
+
+confidence_tier:
+  level: "<HIGH | MEDIUM | LOW | SPARSE>"
+  # HIGH   : Extensive primary sources (100+ pages self-authored, multiple
+  #           long-form interviews, documented decision track record)
+  # MEDIUM : Moderate primary sources (10–50 pages, several interviews,
+  #           reported behavior patterns)
+  # LOW    : Limited primary sources (few interviews, mostly secondary)
+  # SPARSE : Minimal documentation — activate on hard triggers only;
+  #           variant may reflect inference more than evidence
+  rationale: "<One sentence justifying the tier assignment>"
+  primary_source_count: 0
+  # Total distinct primary source documents used.
+  # A shareholder letter = 1. A book = 1 per chapter cited.
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 2: INHERITANCE DECLARATION
+# ─────────────────────────────────────────────────────────────
+
+inherits_from:
+  base_archetype_id: "<ARCHETYPE_ID>"
+  # Reference to the base role archetype this variant modifies.
+  # The base archetype defines default behavior for everything NOT
+  # overridden here.
+  # Example: PRIVATE_EQUITY_PARTNER_SENIOR
+
+  archetype_version: "<semver>"
+  # The specific version of the base archetype.
+  # Prevents drift when archetypes are updated.
+
+  delta_mode: "<ADDITIVE | OVERRIDE | SUPPRESSIVE | MIXED>"
+  # ADDITIVE:    Only adds new behaviors; base archetype behaviors remain intact.
+  # OVERRIDE:    Replaces specific base fields.
+  # SUPPRESSIVE: Explicitly disables certain base archetype defaults.
+  # MIXED:       Combination — most variants are this.
+
+  inheritance_notes: |
+    # Free-text clarification of the inheritance relationship.
+    # What is the most important thing to understand about how this
+    # variant relates to its base archetype?
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 3: PHILOSOPHY DIVERGENCES
+# Core beliefs where this person differs from the standard
+# archetype. Each entry is a named belief with a baseline and
+# a variant delta.
+# ─────────────────────────────────────────────────────────────
+
+philosophy_divergences:
+  - belief_id: "<BELIEF_SLUG>"
+    # Example: RISK_DEFINITION, MACRO_FORECASTING,
+    #          MANAGEMENT_TRUST, MOAT_DURABILITY
+
+    label: "<Short human-readable belief name>"
+
+    archetype_default: |
+      # What the base archetype assumes about this belief.
+      # Write as a behavioral/epistemic statement, not a category label.
+
+    variant_delta:
+      mode: "<REPLACE | AMPLIFY | QUALIFY | INVERT | ADD>"
+      # REPLACE : Categorically different belief; discard archetype default.
+      # AMPLIFY : Same direction as archetype but much stronger intensity.
+      # QUALIFY : Same belief but with specific conditions or exceptions.
+      # INVERT  : Opposite of archetype default.
+      # ADD     : New belief dimension not present in archetype at all.
+
+      statement: |
+        # The actual belief held by this individual.
+        # Expressed as they would express it.
+        # Must be operationally specific — not "they value X more."
+
+      direct_quote: "<verbatim quote if available, else null>"
+      # If a direct quote captures the belief precisely, include it here.
+      # Source field required if populated.
+
+      source_ref: "<source_id from Block 8>"
+
+    confidence: "<HIGH | MEDIUM | LOW>"
+    routing_weight: 0.0
+    # 0.0–1.0. How strongly this belief should influence routing.
+    # 1.0 = always triggers this variant on this topic.
+    # 0.3 = minor signal; combine with others.
+
+  # A well-documented variant typically has 5–15 belief nodes.
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 4: DECISION-MAKING DIVERGENCES
+# Specific scenario classes where this person's PROCESS departs
+# from archetype — and precisely HOW it departs.
+# This is the highest-value section. Shallow variants stop at
+# philosophy. Strong variants map the PROCESS.
+# ─────────────────────────────────────────────────────────────
+
+decision_making_divergences:
+  - scenario_class: "<SCENARIO_SLUG>"
+    # Example: DEAL_SOURCING, VALUATION_UNDER_UNCERTAINTY,
+    #          PORTFOLIO_COMPANY_CRISIS, EXIT_TIMING,
+    #          TEAM_EVALUATION, CAPITAL_ALLOCATION
+
+    label: "<Human-readable scenario name>"
+
+    archetype_process: |
+      # How the standard role archetype handles this scenario.
+      # Describe the default decision PROCESS, not the outcome.
+
+    variant_departure:
+      summary: |
+        # Where and how this person's process diverges.
+        # SPECIFICITY REQUIREMENT: Describe MECHANISM, not just conclusion.
+        # WEAK:   "She decides faster."
+        # STRONG: "She front-loads pattern recognition in the first 20 minutes
+        #          of a management presentation, using a proprietary checklist
+        #          of 8 tells derived from 30 years of CEO interviews, and
+        #          makes a provisional go/no-go before financial modeling begins."
+
+      departure_type: "<SEQUENCE | CRITERIA | SPEED | WEIGHT | THRESHOLD | VETO>"
+      # SEQUENCE  : The ORDER of steps is different.
+      # CRITERIA  : The factors considered are different.
+      # SPEED     : Same process but dramatically faster/slower.
+      # WEIGHT    : Same criteria, different relative weights.
+      # THRESHOLD : Same criteria, different pass/fail cutoffs.
+      # VETO      : This person has non-negotiable blockers the archetype doesn't.
+
+      specific_signals_they_watch:
+        - "<string: specific data points, behaviors, or patterns they look for>"
+        # Example: "Management's answer to 'What keeps you up at night?'"
+        # Example: "Whether the CEO reads the 10-K or delegates it"
+
+      known_heuristics:
+        - "<string: documented rules of thumb or mental shortcuts>"
+        # Must be documented — not assumed.
+
+      failure_modes_they_avoid:
+        - "<string: specific cognitive or analytical errors they guard against>"
+        # Example: "Mirror-imaging (assuming others think like you)"
+
+    source_refs:
+      - "<source_id from Block 8>"
+
+    confidence: "<HIGH | MEDIUM | LOW>"
+
+  # A strong variant has 6–12 scenario classes.
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 5: VOCABULARY AND VERBIAGE
+# The specific linguistic fingerprint of this individual.
+# Enables the AI to reason AND COMMUNICATE with the texture
+# of this person's documented idiom.
+# ─────────────────────────────────────────────────────────────
+
+vocabulary_and_verbiage:
+
+  signature_terms:
+    - term: "<word or phrase>"
+      context: "<when and how they use it>"
+      source_ref: "<source_id>"
+    # Words or short phrases this person uses distinctively.
+    # Not standard archetype vocabulary.
+
+  signature_metaphors:
+    - metaphor: "<the metaphor>"
+      domain: "<source domain of the metaphor>"
+      meaning: "<what conceptual work it does in their reasoning>"
+      source_ref: "<source_id>"
+    # Recurring analogies or figurative frameworks.
+    # Metaphors reveal underlying mental models.
+
+  signature_frameworks:
+    - framework_name: "<name>"
+      description: "<what it is and how it structures thinking>"
+      source_ref: "<source_id>"
+    # Named conceptual frameworks this person has articulated or
+    # relies on repeatedly. Not generic frameworks — their own.
+
+  avoided_vocabulary:
+    - "<string: terms, phrases, or rhetorical moves they notably avoid>"
+    # This is as important as what they DO say.
+    # Must be documented — not assumed.
+
+  formality_register: "<FORMAL | SEMI_FORMAL | CONVERSATIONAL | TECHNICAL>"
+  # Default register of their public communication.
+
+  register_by_medium:
+    written_memo: "<FORMAL | SEMI_FORMAL | CONVERSATIONAL | TECHNICAL>"
+    public_interview: "<FORMAL | SEMI_FORMAL | CONVERSATIONAL | TECHNICAL>"
+    board_presentation: "<FORMAL | SEMI_FORMAL | CONVERSATIONAL | TECHNICAL>"
+    under_pressure: "<FORMAL | SEMI_FORMAL | CONVERSATIONAL | TECHNICAL>"
+    # Register under adversarial questioning or crisis — most revealing.
+
+  sentence_architecture: |
+    # Describe their typical sentence structure and rhetorical pattern.
+    # Is it Socratic? Inductive? Deductive? Analytical? Aphoristic?
+    # Example: "Uses inductive structure: anecdote → general principle
+    # → implication. Long nested sentences in written memos;
+    # shorter and more Socratic in interviews."
+
+  notable_rhetorical_devices:
+    - "<string: documented patterns — hedging, self-deprecation,
+       historical analogy, probabilistic framing, etc.>"
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 6: COMMUNICATION STYLE MATRIX
+# Document behavior across specific contexts, not just at rest.
+# Most revealing data comes from documented moments of pressure.
+# ─────────────────────────────────────────────────────────────
+
+communication_style_matrix:
+
+  in_writing:
+    structure_preference: "<LINEAR | ESSAY | STRUCTURED_SECTIONS | STREAM>"
+    length_preference: "<TERSE | MODERATE | EXPANSIVE>"
+    use_of_data: "<HEAVY | SELECTIVE | ANECDOTAL | RARE>"
+    citation_practice: "<EXPLICIT | IMPLICIT | NONE>"
+    emotional_tone: "<DETACHED | MEASURED | ENGAGED | PASSIONATE>"
+    notes: |
+
+  in_meetings:
+    role_preference: "<DRIVER | FACILITATOR | REACTOR | OBSERVER>"
+    # DRIVER     : Sets agenda, leads discussion.
+    # FACILITATOR: Draws out others, synthesizes.
+    # REACTOR    : Responds to others' leads with depth.
+    # OBSERVER   : Listens long, speaks rarely but decisively.
+    question_style: "<SOCRATIC | DIRECT | HYPOTHETICAL | PROBING>"
+    silence_use: "<FREQUENT | OCCASIONAL | RARE>"
+    challenge_style: "<CONFRONTATIONAL | INDIRECT | REFRAMING | NONE>"
+    notes: |
+
+  under_adversarial_questioning:
+    default_response_pattern: "<DEFLECT | REFRAME | ENGAGE_DIRECTLY | DEFER | ATTACK>"
+    emotional_shift: "<NONE | SUBTLE | MARKED>"
+    vocabulary_shift: "<NONE | MORE_FORMAL | LESS_FORMAL | MORE_TECHNICAL>"
+    documented_examples:
+      - "<string: specific documented instances with source refs>"
+
+  in_public_vs_private:
+    documented_divergence: "<YES | NO | UNKNOWN>"
+    divergence_description: |
+    source_refs: []
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 7: ROUTING TRIGGERS
+# Conditions under which the system ACTIVATES this variant
+# instead of (or in addition to) the base archetype.
+# ─────────────────────────────────────────────────────────────
+
+routing_triggers:
+
+  activation_mode: "<EXCLUSIVE | ADDITIVE | WEIGHTED_BLEND>"
+  # EXCLUSIVE      : When triggered, ONLY this variant applies.
+  # ADDITIVE       : This variant layers on top of base archetype.
+  # WEIGHTED_BLEND : Base and variant are blended by signal strength.
+
+  hard_triggers:
+    - trigger_type: "<TOPIC | ENTITY | CONTEXT | QUERY_PATTERN>"
+      value: "<specific topic, entity name, or pattern>"
+      notes: "<why this is a hard trigger>"
+    # Deterministic — always activate this variant when matched.
+    # These override the confidence gate.
+
+  soft_triggers:
+    - trigger_type: "<TOPIC | STYLE_SIGNAL | DOMAIN | CONTEXT>"
+      value: "<specific value>"
+      weight: 0.0
+      # 0.0–1.0. Sum weights of matching triggers.
+      # If sum >= activation_threshold, activate variant.
+      notes: "<why this is a soft trigger>"
+
+  activation_threshold: 0.6
+  # Minimum summed soft trigger weight to activate variant.
+
+  suppression_conditions:
+    - condition: "<description>"
+      rationale: "<why suppression is correct here>"
+    # Example: Suppress when query is about events after
+    # the variant's documented temporal scope.
+
+  confidence_gate:
+    minimum_tier_to_activate: "<HIGH | MEDIUM | LOW | SPARSE>"
+    # SPARSE variants: activate on hard triggers only.
+    # HIGH variants: activate on soft trigger combinations.
+    fallback_behavior: "<USE_ARCHETYPE | FLAG_UNCERTAINTY | HYBRID>"
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 8: SOURCE DOCUMENTATION
+# Every behavioral claim must trace to a source.
+# This block is the evidentiary foundation.
+# ─────────────────────────────────────────────────────────────
+
+sources:
+  - source_id: "<SRC_UNIQUE_SLUG>"
+    # Convention: SRC_LASTNAME_SOURCETYPE_YEAR
+    # Example: SRC_MARKS_MEMO_2008
+
+    source_type: "<see SOURCE_TYPES enum below>"
+
+    title: "<Full title of document, interview, or source>"
+    date: "<YYYY-MM-DD or YYYY if only year known>"
+    author: "<Author(s) if not the subject themselves>"
+    url: "<URL if accessible; null if print-only>"
+    access_date: "<YYYY-MM-DD when accessed by analyst>"
+    pages_or_timestamp: "<page range, chapter, or MM:SS timestamp>"
+    # Precision enables verification. Do not leave null if locatable.
+
+    description: |
+      # What this source contains and why it is relevant.
+      # What behavioral claims does it support?
+
+    reliability_notes: |
+      # Caveats: ghost-written? Journalist secondhand?
+      # Self-serving PR? Adversarial account?
+
+    direct_quotes_extracted:
+      - quote_id: "<QID_SLUG>"
+        text: "<verbatim quote>"
+        page_or_timestamp: "<location>"
+        used_in_block: "<PHILOSOPHY | DECISION | VOCAB | COMM>"
+
+  # A HIGH confidence variant typically has 10–40+ sources.
+
+# SOURCE TYPES ENUM:
+# PRIMARY_SELF_AUTHORED           : Documents written by the subject.
+#                                   Highest evidential weight.
+# LONG_FORM_INTERVIEW_TRANSCRIPT  : Full transcript or extended video/audio.
+#                                   High evidential weight.
+# DOCUMENTED_SPEECH_OR_PRESENTATION: Recorded or transcribed public speech.
+#                                   High evidential weight.
+# AUTHORIZED_BIOGRAPHY            : Biography with subject's cooperation.
+#                                   High-medium weight.
+# UNAUTHORIZED_BIOGRAPHY          : Reporting without subject's cooperation.
+#                                   Medium weight — may capture candid behavior.
+# LEGAL_OR_REGULATORY_FILING      : Court depositions, SEC filings, testimony.
+#                                   High weight — subject under oath.
+# CONTEMPORANEOUS_REPORTED_BEHAVIOR: Journalist account reported near the time.
+#                                   Medium weight; decays with time.
+# RETROSPECTIVE_REPORTED_BEHAVIOR : Accounts reported long after the fact.
+#                                   Low-medium weight; memory distortion risk.
+# THIRD_PARTY_CHARACTERIZATION    : Colleagues, competitors, employees.
+#                                   Low weight; useful for triangulation only.
+# PATTERN_INFERENCE               : Analyst-derived from observable outputs.
+#                                   Lowest weight. MUST be labeled as inference.
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 9: SUPPRESSED ARCHETYPE BEHAVIORS
+# Base archetype defaults this variant disables or damps.
+# ─────────────────────────────────────────────────────────────
+
+suppressed_archetype_behaviors:
+  - behavior_id: "<BASE_ARCHETYPE_BEHAVIOR_SLUG>"
+    label: "<Human-readable name>"
+    suppression_strength: "<FULL | PARTIAL>"
+    # FULL    : This behavior is completely inactive for this variant.
+    # PARTIAL : Behavior exists but at reduced intensity.
+    rationale: |
+      # Why this archetype default does not apply.
+      # Must cite source.
+    source_refs: []
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 10: TEMPORAL VERSIONING
+# People change. Document which period of this subject's
+# career this variant captures.
+# ─────────────────────────────────────────────────────────────
+
+temporal_scope:
+  period_label: "<e.g. 'Early Oaktree 1990–2005' or 'Post-GFC 2009–present'>"
+  date_range_start: "<YYYY or YYYY-MM>"
+  date_range_end: "<YYYY or YYYY-MM or 'present'>"
+  period_rationale: |
+    # Why this period is distinct. Has the subject's philosophy
+    # demonstrably changed? Document the inflection point.
+  prior_period_variant_id: "<variant_id of earlier period variant, if exists>"
+  known_evolution: |
+    # Documented ways this person's views have changed over time.
+    # Prevents applying early-career beliefs to late-career decisions.
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 11: EPISTEMIC PROFILE
+# What does this person know, and how do they know it?
+# ─────────────────────────────────────────────────────────────
+
+epistemic_profile:
+  primary_knowledge_domains:
+    - "<string: areas where their expertise is deep and documented>"
+
+  acknowledged_blind_spots:
+    - "<string: areas where the subject themselves has acknowledged limitations>"
+    # Self-reported = highest confidence.
+
+  inferred_blind_spots:
+    - domain: "<domain>"
+      inference_basis: "<why inferred from observable patterns>"
+      confidence: "<LOW | MEDIUM>"
+    # MUST be labeled as inference. Not self-reported.
+
+  information_sourcing_habits:
+    - "<string: how this person acquires information>"
+    # Example: "Voracious reader of annual reports"
+    # Example: "Skeptical of Wall Street research"
+
+  calibration_pattern: "<OVERCONFIDENT | WELL_CALIBRATED | UNDERCONFIDENT | VARIABLE>"
+  # Based on documented prediction track record. Requires evidence.
+  calibration_notes: |
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 12: STRESS AND ADVERSITY RESPONSE
+# Document behavior at extremes, not just steady state.
+# The most revealing behavioral data comes from documented
+# moments of pressure, failure, or crisis.
+# ─────────────────────────────────────────────────────────────
+
+stress_response_profile:
+  documented_high_stress_events:
+    - event_label: "<event name>"
+      date: "<YYYY or YYYY-MM>"
+      response_documented: "<how they responded>"
+      source_ref: "<source_id>"
+
+  pattern_under_pressure: |
+    # Synthesized behavioral pattern across documented stress events.
+
+  pressure_vocabulary_shifts:
+    - "<string: documented language changes under pressure>"
+    # Do they become more hedged? More direct?
+    # Do they reach for specific metaphors under stress?
+
+  recovery_pattern: |
+    # How do they process and communicate after a significant mistake?
+
+
+# ─────────────────────────────────────────────────────────────
+# BLOCK 13: MAINTENANCE
+# ─────────────────────────────────────────────────────────────
+
+maintenance:
+  review_schedule: "<QUARTERLY | SEMI_ANNUAL | ANNUAL | EVENT_TRIGGERED>"
+  # EVENT_TRIGGERED: review when a new major primary source becomes available.
+
+  staleness_risk: "<HIGH | MEDIUM | LOW>"
+  # HIGH : Subject is actively publishing; views may evolve rapidly.
+  # LOW  : Subject is retired, deceased, or has stopped active communication.
+
+  open_questions:
+    - question: "<what remains unknown about this individual's behavior>"
+      importance: "<HIGH | MEDIUM | LOW>"
+      potential_sources: "<where to look>"
+  # Intellectual honesty about knowledge gaps is mandatory.
+  # A variant with empty open_questions has stopped looking, not finished.
+
+  known_distortions_in_source_base: |
+    # What systematic biases exist in the available sources?
+    # Example: "All primary sources are investor letters designed to
+    # reassure LPs. Private disagreements and failed bets are
+    # systematically underrepresented."
+
+
+# ─────────────────────────────────────────────────────────────
+# TEMPLATE VALIDATION CHECKLIST
+# 80%+ pass rate required for production activation.
+# ─────────────────────────────────────────────────────────────
+
+validation_checklist:
+  evidential_foundation:
+    - "Every Block 3 (Philosophy) claim has a source_ref pointing to Block 8"
+    - "Every Block 4 (Decisions) claim has at least one source_ref"
+    - "Every signature_term has a documented instance, not an assumption"
+    - "At least one PRIMARY_SELF_AUTHORED or LONG_FORM_INTERVIEW_TRANSCRIPT source exists"
+    - "confidence_tier justified by primary_source_count, not assumed"
+    - "No PATTERN_INFERENCE source is the sole support for any HIGH-confidence claim"
+
+  delta_quality:
+    - "Each philosophy_divergence states BOTH archetype default AND variant delta"
+    - "Each decision_making_divergence describes MECHANISM of departure, not just conclusion"
+    - "suppressed_archetype_behaviors is populated — absence of common behaviors matters"
+    - "temporal_scope is defined — variant does not assume static beliefs across a career"
+
+  routing_precision:
+    - "hard_triggers are specific enough not to over-activate the variant"
+    - "suppression_conditions guard against applying variant beyond its evidential base"
+    - "confidence_gate is set conservatively for LOW and SPARSE variants"
+
+  completeness_of_behavioral_map:
+    - "Block 6 (Communication Style Matrix) covers at least 3 distinct contexts"
+    - "Block 12 (Stress Response) contains at least one documented stress event with source"
+    - "acknowledged_blind_spots is populated — a variant with no blind spots is not credible"
+    - "open_questions is populated — intellectual honesty about gaps is mandatory"
+
+  anti_projection_controls:
+    - "inferred_blind_spots explicitly labeled as inference with LOW or MEDIUM confidence"
+    - "No direct_quote is paraphrased — quotes must be verbatim with page/timestamp"
+    - "known_distortions_in_source_base is filled — analyst has considered systematic bias"
+
+
+# ─────────────────────────────────────────────────────────────
+# ANTI-PATTERN CATALOG
+# ─────────────────────────────────────────────────────────────
+
+anti_patterns:
+  celebrity_fact_sheet:
+    description: "Contains biography (education, career timeline, net worth) but no
+      behavioral deltas from archetype. Does not change how AI reasons."
+
+  unsourced_personality_assignment:
+    description: "Big Five traits or DISC labels assigned without behavioral evidence.
+      Personality labels without behavioral grounding are speculation."
+
+  quote_without_context:
+    description: "Famous quotes listed without noting the circumstances in which they
+      were said. A crisis quote may not reflect steady-state behavior."
+
+  static_temporal_assumption:
+    description: "Variant treats 1990s views and 2020s views as identical.
+      People's philosophies evolve."
+
+  archetype_absence:
+    description: "Documents this person's views without specifying what they diverge FROM.
+      Without the delta, there is no variant — only a biography."
+
+  inference_labeled_as_evidence:
+    description: "PATTERN_INFERENCE source cited as if it were a primary source.
+      Inflates apparent confidence; produces overconfident AI behavior."
+
+  vocabulary_without_mechanism:
+    description: "Lists signature phrases but does not explain what conceptual work
+      those phrases do. AI will mimic language without understanding the reasoning."
+
+  no_stress_profile:
+    description: "Variant only documents steady-state communication.
+      People diverge most sharply from their archetype under pressure."
+
+  blind_spot_omission:
+    description: "Variant documents strengths only. Every professional has documented
+      knowledge gaps. Omitting them produces an implausibly omniscient persona."
+
+  overclaiming_completeness:
+    description: "Empty open_questions block. No real person is fully documented.
+      Claiming completeness signals the analyst stopped looking."

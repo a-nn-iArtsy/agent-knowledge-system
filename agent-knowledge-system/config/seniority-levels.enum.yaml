@@ -1,0 +1,77 @@
+# ============================================================
+# SENIORITY LEVELS — Controlled Vocabulary
+# Used in agent profiles and role registry.
+# Determines scope of authority, decision rights, and the
+# type of knowledge the role is expected to hold.
+# ============================================================
+
+seniority_levels:
+
+  board:
+    code: board
+    description: >
+      Non-executive governance role. Sets strategy at the highest level,
+      holds management accountable, does not execute. Knowledge focus:
+      governance, fiduciary duty, strategic oversight.
+    typical_titles: [Board Director, Chairman, Lead Independent Director]
+    decision_authority: Highest — approves major transactions, CEO hire/fire
+    knowledge_depth_expectation: Breadth over depth; strategic not operational
+
+  c_suite:
+    code: c-suite
+    description: >
+      Top executive with functional or company-wide accountability.
+      Accountable for outcomes, not just outputs. Knowledge focus:
+      strategic, cross-functional, stakeholder management.
+    typical_titles: [CEO, CFO, COO, CTO, GC, CHRO, CMO]
+    decision_authority: Full within function; major decisions require board/peer alignment
+    knowledge_depth_expectation: Deep in core function, broad across adjacent functions
+
+  c_suite_equivalent:
+    code: c-suite-equivalent
+    description: >
+      External principal with authority comparable to C-suite.
+      Typically a fund partner, senior partner at a law/consulting firm,
+      or managing director at a bank. Not on the portfolio company's
+      org chart but holds effective authority over it.
+    typical_titles: [PE Partner, Managing Director, Senior Partner]
+    decision_authority: Investment/engagement decisions within fund/firm mandate
+    knowledge_depth_expectation: Deep domain expertise + portfolio-level pattern recognition
+
+  senior:
+    code: senior
+    description: >
+      High-expertise individual contributor or team lead. Executes
+      complex work independently and may supervise others. Knowledge
+      focus: deep technical/domain expertise in a defined scope.
+    typical_titles: [VP, Director, Senior Associate, Senior Counsel]
+    decision_authority: Owns outputs within defined scope; escalates strategy
+    knowledge_depth_expectation: Deep in specialty; functional knowledge of adjacent areas
+
+  mid:
+    code: mid
+    description: >
+      Developing professional with growing expertise. Works with
+      supervision on complex tasks. Knowledge focus: developing
+      domain expertise; strong procedural knowledge.
+    typical_titles: [Associate, Manager, Counsel, Analyst II]
+    decision_authority: Limited; most decisions require senior review
+    knowledge_depth_expectation: Practitioner-grade in core skills; developing expert-grade
+
+  junior:
+    code: junior
+    description: >
+      Early-career professional. Works under close supervision.
+      Knowledge focus: fundamentals, procedural execution, learning.
+    typical_titles: [Analyst, Associate (entry), Junior Counsel, Intern]
+    decision_authority: Minimal; executes defined tasks under direction
+    knowledge_depth_expectation: Surface-to-practitioner grade
+
+  external:
+    code: external
+    description: >
+      Advisor, consultant, or counterparty who is not part of the
+      organization but interacts with its agents in a defined capacity.
+    typical_titles: [Advisor, Consultant, Counterparty, LP, Regulator]
+    decision_authority: Varies by engagement type
+    knowledge_depth_expectation: Defined by engagement scope

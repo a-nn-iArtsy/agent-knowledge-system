@@ -1,0 +1,34 @@
+# ============================================================
+# PERSONA REGISTRY
+# Flat queryable index of all named individual persona variants.
+# Query by: base_role | domain | confidence_tier
+#
+# ADD A VARIANT: append an entry here whenever a new variant
+# file is created under agents/[domain]/[role]/variants/[name].yaml
+#
+# NAMING CONVENTION: variant files use lowercase-hyphenated
+# individual name. Example: jeff-hawn.yaml, howard-marks.yaml
+# ============================================================
+
+variants:
+  # Empty — no variants built yet.
+  # First targets after base role profiles are complete:
+  #
+  # Priority 1 — PE:
+  #   - jeff-hawn (PE operator, turnaround methodology)
+  #     base_role: private-equity-partner
+  #     confidence_tier: MEDIUM (public record exists; limited primary self-authored)
+  #
+  # Priority 2 — Investors:
+  #   - howard-marks (Oaktree CIO, credit cycle + second-level thinking)
+  #     base_role: to-be-created: credit-investor
+  #     confidence_tier: HIGH (extensive primary self-authored memos)
+  #
+  #   - warren-buffett (Berkshire, value investing)
+  #     base_role: to-be-created: value-investor
+  #     confidence_tier: HIGH (50+ years of annual letters + interviews)
+  #
+  # Priority 3 — Operators:
+  #   - elon-musk (CEO/operator, radical management divergence)
+  #     base_role: to-be-created: ceo-founder-operator
+  #     confidence_tier: MEDIUM (extensive reporting; limited primary authored)

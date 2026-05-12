@@ -1,0 +1,73 @@
+# ============================================================
+# RELATIONSHIP GRAPH
+# Adjacency list encoding the full inter-agent relationship graph.
+# Used for fast traversal without loading individual rel files.
+#
+# ADD AN EDGE: append whenever a relationship file is created
+# under relationships/
+#
+# EDGE TYPES (from relationship taxonomy):
+#   HD | PC | AC | CS | OG | DT | GK | BS
+# ============================================================
+
+graph_type: directed-weighted
+
+# weight: 0.0–1.0 — how frequently these roles interact
+# (1.0 = constant interaction, 0.1 = rare/situational)
+
+edges:
+  - from: private-equity-partner
+    to: cfo
+    relationship_type: HD
+    relationship_label: "PE principal — portfolio company CFO"
+    weight: 0.85
+    file: relationships/cross-domain/pe-cfo-interface.rel.yaml
+    status: stub
+
+  - from: private-equity-partner
+    to: ma-attorney
+    relationship_type: AC
+    relationship_label: "Deal principal — deal counsel"
+    weight: 0.80
+    file: relationships/cross-domain/pe-legal-interface.rel.yaml
+    status: stub
+
+  - from: private-equity-partner
+    to: coo
+    relationship_type: HD
+    relationship_label: "PE principal — portfolio company COO"
+    weight: 0.70
+    file: relationships/cross-domain/pe-coo-interface.rel.yaml
+    status: stub
+
+  - from: cfo
+    to: general-counsel
+    relationship_type: PC
+    relationship_label: "Peer C-suite — financial / legal"
+    weight: 0.65
+    file: relationships/org-hierarchies/cfo-gc-interface.rel.yaml
+    status: stub
+
+  - from: ma-attorney
+    to: general-counsel
+    relationship_type: AC
+    relationship_label: "Deal counsel — in-house GC"
+    weight: 0.75
+    file: relationships/cross-domain/ma-attorney-gc-interface.rel.yaml
+    status: stub
+
+  - from: coo
+    to: cfo
+    relationship_type: PC
+    relationship_label: "Peer C-suite — operations / finance"
+    weight: 0.70
+    file: relationships/org-hierarchies/coo-cfo-interface.rel.yaml
+    status: stub
+
+  - from: management-consultant
+    to: private-equity-partner
+    relationship_type: AC
+    relationship_label: "Strategy advisor — PE principal"
+    weight: 0.50
+    file: relationships/engagement-patterns/consultant-pe-interface.rel.yaml
+    status: stub

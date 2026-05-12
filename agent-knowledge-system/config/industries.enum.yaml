@@ -1,0 +1,73 @@
+# ============================================================
+# INDUSTRIES — Controlled Vocabulary
+# Used in agent profiles, skill files, and knowledge trees
+# to specify domain applicability.
+# ============================================================
+
+industries:
+
+  # ── PRIMARY VERTICALS ──────────────────────────────────────
+  finance:
+    code: finance
+    subdomains:
+      - private-equity
+      - venture-capital
+      - growth-equity
+      - hedge-funds
+      - investment-banking
+      - corporate-finance
+      - credit-distressed
+      - real-estate
+      - infrastructure
+
+  legal:
+    code: legal
+    subdomains:
+      - ma-law
+      - securities-law
+      - corporate-governance
+      - regulatory-compliance
+      - litigation
+      - employment-law
+      - ip-law
+
+  operations:
+    code: operations
+    subdomains:
+      - supply-chain
+      - manufacturing
+      - process-improvement
+      - workforce-management
+      - facilities
+
+  technology:
+    code: technology
+    subdomains:
+      - software-engineering
+      - product-management
+      - data-ai-ml
+      - infrastructure-devops
+      - cybersecurity
+
+  strategy:
+    code: strategy
+    subdomains:
+      - corporate-strategy
+      - management-consulting
+      - business-development
+      - competitive-intelligence
+
+  # ── SECTOR TAGS (used on knowledge trees for industry-specific content) ──
+  sectors:
+    - aerospace-defense
+    - automotive
+    - consumer-retail
+    - energy-utilities
+    - financial-services
+    - healthcare-life-sciences
+    - industrials-manufacturing
+    - media-entertainment
+    - real-estate-proptech
+    - saas-software
+    - telecom
+    - transportation-logistics

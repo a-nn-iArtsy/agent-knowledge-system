@@ -1,0 +1,492 @@
+# ============================================================
+# KNOWLEDGE TREE NODE — CANONICAL SCHEMA v1.0
+# Professional Agent Knowledge System
+#
+# PURPOSE: Reusable scaffold for any professional domain's
+# hierarchical knowledge structure. This is NOT a list of
+# facts — it is a map of how expert knowledge is organized,
+# connected, and contested.
+#
+# RESEARCH BASIS:
+#   - Ontology design (OWL/RDF, Neo4j graph schemas)
+#   - Zettelkasten / PKM methodologies (PARA, Building a Second Brain)
+#   - CFA curriculum structure / professional certification maps
+#   - Cognitive Task Analysis & Critical Decision Method
+#   - Intelligence community domain expertise frameworks
+#   - Consulting firm knowledge management architectures
+# ============================================================
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 1: DEPTH LEVEL DEFINITIONS
+# Universal across all domains. A node's depth level is
+# determined by conceptual scope, not file nesting.
+# ─────────────────────────────────────────────────────────────
+
+# LEVEL 0 — DOMAIN ROOT
+#   Scope: The entire domain itself (e.g., "Private Equity", "Oncology")
+#   Count: Always exactly 1 per tree
+#   Rule:  Contains no knowledge itself — only structure and navigation
+
+# LEVEL 1 — MAJOR SUBDOMAIN (Pillar)
+#   Scope: A self-contained practice area a professional could spend a career in
+#   Count: 3–9 per domain root (if >9, the domain root is too broad)
+#   Rule:  Each L1 can become its own L0 if forked into a sub-tree
+
+# LEVEL 2 — DISCIPLINE (Module)
+#   Scope: A coherent body of knowledge with defined inputs/outputs
+#   Count: 3–12 per L1 node
+#   Rule:  A practitioner can be "strong" or "weak" in this as a distinct skill
+
+# LEVEL 3 — CONCEPT / FRAMEWORK
+#   Scope: A named idea, model, or analytical approach within a discipline
+#   Count: 3–15 per L2 node
+#   Rule:  Primary node type where expert-grade insight lives
+
+# LEVEL 4 — PRINCIPLE / HEURISTIC / PROCEDURE
+#   Scope: An actionable rule, mental model, or step-by-step procedure
+#   Count: 2–10 per L3 node
+#   Rule:  Expressible as "When X, do Y because Z" or "Always/never do X"
+
+# LEVEL 5 — ATOMIC FACT / VARIANCE POINT / JUDGMENT CALL
+#   Scope: A single irreducible truth, a named expert's divergence, or
+#           an unresolvable decision
+#   Count: 1–8 per L4 node
+#   Rule:  Cannot be decomposed further without losing meaning
+
+# SUBTREE FORK TRIGGER:
+#   Fork into a new standalone tree when a subtopic has:
+#     - More than 7 Level 2 nodes
+#     - Prerequisites from a completely different domain
+#     - Independent navigation 80%+ of the time
+#     - A dedicated professional role assigned to it
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 2: NODE SCHEMA TEMPLATE
+# Fields marked [REQUIRED] must be populated for node validity.
+# Fields marked [EXPERT-GRADE] are the primary quality signal.
+# ─────────────────────────────────────────────────────────────
+
+node:
+
+  # ── IDENTITY [ALL REQUIRED] ──────────────────────────────
+  id: "<string: globally unique. Format: {domain}.{l1}.{l2}.{node-slug}>"
+  # Example: "pe.diligence.commercial.churn-cohort-analysis"
+  # Never change after creation — all relationship refs point here.
+
+  name: "<string: title case noun phrase>"
+  # Good: "Churn Cohort Analysis"
+  # Bad:  "How to Analyze Churn" (gerund = anti-pattern)
+
+  node_type: "<enum>"
+  # One of:
+  #   domain_root | subdomain | discipline | concept | framework |
+  #   principle | heuristic | procedure | fact | variance_point | judgment_call
+  # See NODE TYPE SELECTION GUIDE (Section 5) for selection rules.
+
+  depth_level: "<integer 0–5>"
+  # Must be consistent with node_type.
+  # framework → L3, principle → L4, variance_point → L5
+
+  domain: "<string: the Level-0 domain this node belongs to>"
+  # Single value. Example: "private_equity"
+
+  parent_id: "<string | null>"
+  # ID of the direct parent node. Null only for Level-0 root.
+
+
+  # ── CONTENT FIELDS ───────────────────────────────────────
+  summary: "<string: 2–4 sentences [REQUIRED]>"
+  # Answers: What is this? Why does it matter in this domain?
+  # Written for someone who knows the parent domain but not this concept.
+  # FORBIDDEN: starting with "This is..." or "X is a..."
+  # FORBIDDEN: restating the node name in different words.
+  # REQUIRED: makes a substantive claim, not just a definition.
+
+  expert_insight: "<string: 2–5 sentences [EXPERT-GRADE]>"
+  # The thing textbooks don't say. Must contain at least ONE of:
+  #   - A non-obvious implication
+  #   - A common practitioner mistake
+  #   - A tension with adjacent doctrine
+  #   - A conditional that changes the standard answer
+  # SHALLOW TELLS: empty field, or field that restates the summary.
+  # This field is the PRIMARY quality signal for the entire node.
+
+  when_this_matters: "<string: concrete triggering scenario [EXPERT-GRADE]>"
+  # "This node becomes load-bearing when..."
+  # Must reference a real scenario, not a generic "when analyzing X."
+  # Example: "This matters when NRR > 100% but logo churn is
+  # accelerating — the two signals contradict and require
+  # resolution before closing."
+
+  common_errors:
+    - "<string: one specific practitioner mistake per entry [EXPERT-GRADE]>"
+    # Each entry: present-tense, one sentence, no attribution unless documented.
+    # At least 1 entry required at L3+.
+    # Must be specific — "not understanding X" is not a valid error.
+    # REQUIRED: at least one error targeting proficient-level practitioners,
+    # not just novices.
+
+
+  # ── KNOWLEDGE QUALITY / EPISTEMICS ───────────────────────
+  quality_grade: "<enum [REQUIRED]>"
+  # surface      : Textbook definition. Anyone with Wikipedia has this.
+  #                (Flag for upgrade — low value in this system)
+  # practitioner : Standard working knowledge. Passes a job interview.
+  #                (expert_insight populated, common_errors populated)
+  # expert       : Non-obvious depth. Requires direct practice or deep study.
+  #                (when_this_matters specific, variance_points exist,
+  #                 sources include primary practitioner evidence)
+  # insider      : Not publicly documented. Comes from direct observation
+  #                or named-individual capture.
+  #                (All fields populated; source_type = documented_individual
+  #                 or direct_observation; attribution handled carefully)
+
+  confidence: "<enum [REQUIRED]>"
+  # established : Multiple independent sources agree; durable over time
+  # contested   : Named experts or schools of thought disagree meaningfully
+  # provisional : Supported but evidence base is thin or recent
+  # deprecated  : Was once standard doctrine; now superseded
+
+
+  # ── PREREQUISITE & RELATIONSHIP FIELDS ───────────────────
+  prerequisites:
+    - "<node_id: must be understood before this node makes sense>"
+    # Empty list acceptable at L1–L2.
+    # Should NEVER be empty at L4–L5.
+    # These become PREREQUISITE_OF edges in the graph.
+
+  related_nodes:
+    - id: "<node_id>"
+      rel: "<relationship_type from SECTION 3 enum>"
+    # Each entry: node ID + named relationship type.
+    # Use canonical relationship type names only — no freeform labels.
+    # This field is the primary connectivity signal.
+
+  variance_points:
+    # Named-individual or named-school divergences from this node's doctrine.
+    # See VARIANCE POINT SCHEMA (Section 4) for full structure.
+    # This is the highest-signal field for insider-grade trees.
+    # A node with confidence = "contested" MUST have at least one entry here.
+    []
+
+
+  # ── SOURCE ATTRIBUTION [REQUIRED at L3+] ─────────────────
+  sources:
+    - label: "<string: short human label>"
+      type: "<source_type from enum below>"
+      citation: "<full citation, URL, or reference>"
+      credibility: "<primary | secondary | practitioner_consensus | anecdotal>"
+      date_captured: "<YYYY-MM>"
+      notes: "<optional: what specifically this source supports>"
+  # At least 1 source required at L3+.
+  # At least 2 sources required for expert or insider grade nodes.
+
+  source_type_primary: "<enum [REQUIRED]>"
+  # Dominant source type for this node's expert_insight:
+  #   primary_document       : Published primary source (filing, regulation, paper)
+  #   practitioner_text      : Book, curriculum, or established training material
+  #   practitioner_consensus : Widely held among domain professionals (no single source)
+  #   documented_individual  : Captured directly from a named person (attribution required)
+  #   direct_observation     : From direct practice or case experience (anonymous)
+  #   inferred               : Logical extension of other nodes; not independently sourced
+  # WARNING: quality_grade = "expert" with source_type_primary = "inferred" is invalid.
+
+
+  # ── METADATA ─────────────────────────────────────────────
+  tags:
+    - "<string: free-form searchability tags — use sparingly>"
+    # Prefer relationship edges over tags.
+
+  stability: "<enum>"
+  # evergreen     : Methodology/principle; decades-durable
+  # slow_moving   : Changes with major regulatory or market shifts (~years)
+  # fast_moving   : Changes with market cycles or technology (~months)
+  # time_sensitive: Point-in-time accuracy; expires quickly
+
+  review_date: "<YYYY-MM>"
+  # Derived from stability:
+  #   evergreen → +3yr | slow_moving → +18mo | fast_moving → +6mo
+
+  created: "<YYYY-MM-DD>"
+  last_updated: "<YYYY-MM-DD>"
+  author: "<string: analyst ID or team ID for accountability>"
+
+
+  # ── STRUCTURAL FLAGS ──────────────────────────────────────
+  is_subtree_root: "<boolean>"
+  # True if this node is the L0 root of a forked sub-domain tree.
+  # When true, a separate tree file must exist for this node.
+
+  is_gateway_node: "<boolean>"
+  # True if this node is a required prerequisite for 3+ other nodes.
+  # Gateway nodes must have the highest quality_grade in their subtree.
+  # Identified through graph traversal, not manually assigned.
+
+  is_contested_terrain: "<boolean>"
+  # True if confidence = "contested" OR has 2+ variance_points.
+  # Surfaces nodes where standard doctrine is unreliable for navigation.
+
+  deprecated_by: "<node_id | null>"
+  # If confidence = "deprecated", pointer to the superseding node.
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 3: RELATIONSHIP TYPE ENUM
+# All edges between nodes must use one of these named types.
+# Direction matters: relationship reads from source → target.
+# ─────────────────────────────────────────────────────────────
+
+relationship_types:
+
+  structural:
+    PREREQUISITE_OF:
+      reads_as: "A must be understood before B"
+      use: "B's content is incomprehensible without A"
+      validation: "If B's summary refers to concepts defined in A, this edge exists"
+      note: "Creates the learning-order DAG; used for curriculum sequencing"
+
+    ELABORATES:
+      reads_as: "A provides more specific detail on a part of B"
+      use: "L4 nodes elaborating an L3 concept; footnote-level depth on parent claims"
+      note: "Does not mean B is a summary of A — elaboration flows downward"
+
+    PART_OF:
+      reads_as: "A is a component of B"
+      use: "When A has no standalone meaning outside of B's context"
+      note: "Different from PREREQUISITE_OF — A exists inside B, not just before it"
+
+  substantive:
+    APPLIES_TO:
+      reads_as: "Framework/principle A is used to analyze domain B"
+      use: "When a concept from one discipline is deployed in another"
+      example: "DCF methodology APPLIES_TO infrastructure deal valuation"
+
+    IS_VARIANT_OF:
+      reads_as: "A is a version of B adapted for specific conditions"
+      use: "A follows same underlying logic as B but differs in application"
+      note: "Not the same as CONTRADICTS — variants share a parent logic"
+
+    SUPERSEDES:
+      reads_as: "A is current doctrine; B is the deprecated prior view"
+      use: "When doctrine has formally shifted"
+      required_action: "B node must have confidence = deprecated and deprecated_by = A's id"
+
+    CONTRADICTS:
+      reads_as: "A and B make claims that cannot both be true (symmetric)"
+      use: "When two nodes reach logically incompatible conclusions"
+      note: "Do NOT use for mere emphasis differences — must be logically incompatible"
+      required_action: "At least one node must have confidence = contested"
+
+    EVIDENCES:
+      reads_as: "A provides empirical support for B"
+      use: "When a fact/case node (L5) supports the claim of a principle/concept (L3/L4)"
+
+    ANALOGIZES_TO:
+      reads_as: "A is structurally similar to B in a non-obvious way"
+      use: "Cross-domain insight bridges — use sparingly (high-value but easily overused)"
+      warning: "Flag any node with 3+ ANALOGIZES_TO edges"
+
+  judgment:
+    CONTEXTUALIZES:
+      reads_as: "A is a condition that changes how B should be applied"
+      use: "When a variance point or context node modifies standard doctrine"
+
+    PRODUCES_JUDGMENT_CALL:
+      reads_as: "A is a situation that requires the judgment_call node B"
+      use: "When a concept or condition leads to a decision with no universal right answer"
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 4: VARIANCE POINT SCHEMA
+# Embedded within a parent node's variance_points list.
+# This is the highest-value unique feature of this system.
+# Transforms the tree from "standard view" to a map of how
+# real practitioners actually think differently.
+# ─────────────────────────────────────────────────────────────
+
+variance_point:
+
+  id: "<string: {parent_node_id}.vp.{slug}>"
+  # Example: "pe.diligence.commercial.churn-cohort-analysis.vp.sequoia-gross-only"
+
+  type: "<enum [REQUIRED]>"
+  # named_individual   : A specific identified person holds this view
+  # named_firm         : A specific firm's documented approach diverges
+  # named_school       : An identifiable intellectual tradition diverges
+  # named_era          : Standard doctrine in a specific period differed
+  # named_jurisdiction : Doctrine differs by geography or regulatory regime
+
+  holder: "<string [REQUIRED]>"
+  # Name of the individual, firm, school, or era.
+  # As specific as documentation allows.
+
+  holder_role: "<string>"
+  # Why this holder's divergence matters: their position, track record, authority.
+
+  standard_doctrine: "<string [REQUIRED]>"
+  # Crisp, falsifiable statement of the mainstream position.
+  # This is the position being diverged FROM.
+  # FORBIDDEN: vague statements. Must be operationally specific.
+
+  divergent_position: "<string [REQUIRED]>"
+  # What this holder believes instead, in their documented logic.
+  # Must be specific enough to operationalize.
+  # FORBIDDEN: "they disagree" — state HOW they diverge.
+  # FORBIDDEN: paraphrase of standard_doctrine.
+
+  reasoning: "<string [EXPERT-GRADE]>"
+  # The underlying logic or worldview difference producing the divergence.
+  # What assumption does the holder make differently?
+
+  conditions_of_validity: "<string>"
+  # Under what circumstances is the holder's position more correct than doctrine?
+
+  evidence_for_divergence: "<string [REQUIRED]>"
+  # How do we know this person/firm holds this position?
+
+  evidence_type: "<enum [REQUIRED]>"
+  # documented_quote            : Verbatim statement by the holder
+  # documented_behavior         : Observable action pattern
+  # reported_by_credible_source : Secondhand but from a reliable source
+  # inferred                    : Analyst inference from patterns
+  # WARNING: inferred MUST be flagged prominently — lowest evidential weight
+
+  source:
+    label: "<string>"
+    citation: "<string>"
+    date_captured: "<YYYY-MM>"
+
+  significance: "<enum>"
+  # cosmetic     : Difference in language/framing; same operational result
+  # tactical     : Changes specific analytical steps or outputs
+  # strategic    : Changes a recommendation or decision
+  # foundational : Reflects a different underlying model of how the domain works
+
+  downstream_impact: "<string>"
+  # If you adopt this holder's position instead of doctrine, what else changes?
+  # Maps the cascade of this variance point through the rest of the tree.
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 5: NODE TYPE SELECTION GUIDE
+# ─────────────────────────────────────────────────────────────
+
+node_type_guide:
+  domain_root:    {depth: 0, description: "The domain itself; navigation only"}
+  subdomain:      {depth: 1, description: "Major practice pillar; career specialization"}
+  discipline:     {depth: 2, description: "Coherent body of work with a recognizable name"}
+  concept:        {depth: 3, description: "Named idea with analytical power"}
+  framework:      {depth: 3, description: "Structured multi-part model for analysis"}
+  principle:      {depth: 4, description: "Durable rule that holds across contexts with named conditions"}
+  heuristic:      {depth: 4, description: "Rule-of-thumb; works most of the time with known exceptions"}
+  procedure:      {depth: 4, description: "Step-by-step method for accomplishing a specific task"}
+  fact:           {depth: 5, description: "Specific datum, case, or data point evidencing a principle"}
+  variance_point: {depth: 5, description: "Named individual/firm/school divergence from standard doctrine"}
+  judgment_call:  {depth: 5, description: "Documented decision where reasonable experts disagree; context determines answer"}
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 6: TEMPLATE VALIDATION CHECKLIST
+# Run against any knowledge tree before accepting as expert-grade.
+# Fails at first unresolved CRITICAL item.
+# ─────────────────────────────────────────────────────────────
+
+validation_checklist:
+  structural_integrity__critical:
+    - "Every node has a unique, stable ID following the naming convention"
+    - "The tree has exactly one Level-0 root node"
+    - "Every non-root node has a valid parent_id that exists in the tree"
+    - "No node has depth_level inconsistent with its node_type"
+    - "Every L3+ node has at least one PREREQUISITE_OF edge defined"
+    - "No circular prerequisite dependencies (graph is a DAG)"
+    - "L1 nodes number between 3 and 9"
+    - "Any subtree with 7+ L2 nodes has been reviewed for fork candidacy"
+
+  content_quality__critical:
+    - "Every node's summary answers: What is this AND why does it matter here?"
+    - "No summary begins with 'This is...' or 'X is a...'"
+    - "expert_insight populated for all L3+ nodes"
+    - "expert_insight contains at least one of: non-obvious implication,
+       common practitioner mistake, tension with adjacent doctrine,
+       conditional that changes the standard answer"
+    - "common_errors populated for all L3+ nodes (min 1 error per node)"
+    - "when_this_matters populated for all L3+ nodes with a concrete scenario"
+    - "quality_grade assigned honestly — no node marked 'expert' without
+       populated expert_insight, variance_points, and specific sources"
+
+  variance_points__critical:
+    - "Every node with confidence = 'contested' has at least one variance_point"
+    - "Every variance_point has evidence_type specified"
+    - "No variance_point has evidence_type = 'inferred' without an explicit flag"
+    - "standard_doctrine is a crisp falsifiable claim, not vague"
+    - "divergent_position is operationally specific — not 'they disagree'"
+
+  source_attribution__critical:
+    - "All L3+ nodes have at least 1 source"
+    - "All expert or insider grade nodes have at least 2 sources"
+    - "No node has source_type_primary = 'inferred' above quality_grade = 'surface'"
+    - "All 'documented_individual' sources have a real citation"
+
+  depth_calibration__high_priority:
+    - "Tree reaches L5 in at least 30% of branches"
+    - "No L3 node has fewer than 2 child nodes unless terminal by design"
+    - "Gateway nodes (is_gateway_node = true) have quality_grade = expert or insider"
+    - "Insider grade nodes are rare — if >10% of nodes are insider,
+       either quality standards were lowered or attribution is needed"
+
+  anti_pattern_check:
+    - "No node named with gerunds ('Understanding X', 'Analyzing Y')"
+    - "No node where expert_insight = summary (copy-paste of surface content)"
+    - "No is_contested_terrain = false on a node with active CONTRADICTS edges"
+    - "No judgment_call node that has a declared single correct answer"
+    - "No variance_point where standard_doctrine and divergent_position
+       are paraphrases of each other"
+
+
+# ─────────────────────────────────────────────────────────────
+# SECTION 7: ANTI-PATTERN CATALOG
+# What shallow knowledge trees look like — catch and reject.
+# ─────────────────────────────────────────────────────────────
+
+anti_patterns:
+  textbook_dump:
+    description: "Nodes populated with definitions from Wikipedia or introductory material.
+      expert_insight either doesn't exist or restates the summary."
+    detection: "expert_insight = summary (same claim, slightly reworded)"
+
+  flat_list:
+    description: "Tree has L0 root and dozens of L1 nodes with no further depth.
+      No prerequisite structure. The tree is an index, not a knowledge graph."
+    detection: "Max depth = 2. Zero PREREQUISITE_OF edges. Zero variance_points."
+
+  fake_variance_point:
+    description: "Variance points exist but divergent_position is not operationally
+      different from standard doctrine — only the framing differs."
+    detection: "standard_doctrine and divergent_position are paraphrases; evidence_type = inferred"
+
+  orphaned_node:
+    description: "Nodes with no PREREQUISITE_OF edges, no parent_id, and no related_nodes.
+      Expert knowledge is relational; isolated nodes are surface knowledge."
+    detection: "Any L3+ node with empty prerequisites AND empty related_nodes"
+
+  confidence_inflation:
+    description: "All nodes marked 'established' even where active practitioner debate exists.
+      No contested nodes. No CONTRADICTS edges in a tree of 50+ nodes."
+    detection: "Zero contested nodes, zero CONTRADICTS edges"
+
+  gerund_cemetery:
+    description: "Node names are action phrases ('Analyzing Market Size') rather than
+      named concepts. These are topic headings, not knowledge nodes."
+    detection: "Any node_name beginning with a gerund or 'How to'"
+
+  surface_grade_inflation:
+    description: "Nodes marked quality_grade = 'expert' but source is a textbook,
+      with no variance_points, no documented individual sources, no common_errors."
+    detection: "quality_grade = expert + zero variance_points + zero documented_individual sources"
+
+  judgment_call_resolved:
+    description: "A judgment_call node contains a declared 'correct answer.'
+      Judgment calls by definition have no universal answer."
+    detection: "node_type = judgment_call + no when_this_matters + no variance_points"

@@ -1,0 +1,125 @@
+# ============================================================
+# SKILL TYPES — Controlled Vocabulary
+# All skill files must use one of these type values.
+# Determines which template delta fields apply on top of
+# the master skill template.
+# ============================================================
+
+skill_types:
+
+  analytical:
+    code: analytical
+    description: >
+      Skills involving quantitative or structured analysis to produce
+      a finding, model, or conclusion. Heavy on data inputs, defined
+      methodologies, and verifiable outputs.
+    template_delta: skills/_templates/skill-type--analytical.template.yaml
+    examples:
+      - LBO Modeling
+      - DCF Valuation
+      - Commercial Due Diligence
+      - EBITDA Bridge Analysis
+      - Cohort Analysis
+    key_template_additions:
+      - assumption_register
+      - model_hygiene_requirements
+      - sensitivity_analysis_protocol
+      - output_artifact_specification
+
+  interpersonal:
+    code: interpersonal
+    description: >
+      Skills involving real-time human interaction, influence, and
+      relationship management. Performance depends on reading and
+      adapting to counterparts in live situations.
+    template_delta: skills/_templates/skill-type--interpersonal.template.yaml
+    examples:
+      - Executive Negotiation
+      - Stakeholder Management
+      - Board Governance
+      - Management Assessment Interview
+    key_template_additions:
+      - counterpart_modeling_framework
+      - live_calibration_protocol
+      - micro_signal_library
+      - debrief_discipline
+
+  judgment_heuristic:
+    code: judgment-heuristic
+    description: >
+      Skills that are primarily pattern-recognition and decision-making
+      under ambiguity. No fully deterministic procedure exists — expert
+      performance requires heuristics, mental models, and calibrated
+      intuition built from experience.
+    template_delta: skills/_templates/skill-type--judgment-heuristic.template.yaml
+    examples:
+      - Management Team Assessment
+      - Capital Allocation
+      - Deal Structuring
+      - Operational Turnaround
+      - Investment Thesis Formation
+    key_template_additions:
+      - pattern_library
+      - disconfirmation_discipline
+      - base_rate_anchors
+      - known_cognitive_biases_to_guard
+    note: >
+      Procedural steps are compressed for this type — the skill is not
+      primarily a sequence of steps. The pattern_library and decision_gates
+      sections are expanded instead.
+
+  procedural_technical:
+    code: procedural-technical
+    description: >
+      Skills that follow a defined sequence of steps with verifiable
+      checkpoints. Expert performance is about precision, completeness,
+      and error-prevention — not primarily judgment.
+    template_delta: skills/_templates/skill-type--procedural-technical.template.yaml
+    examples:
+      - Legal Due Diligence Checklist
+      - Regulatory Filing Preparation
+      - Financial Close Process
+      - Data Room Management
+    key_template_additions:
+      - step_verification_gates
+      - rollback_or_remediation_protocol
+      - error_detection_checkpoints
+      - compliance_requirements
+
+  domain_expertise:
+    code: domain-expertise
+    description: >
+      Deep knowledge of a specific domain, regulation, or technical area
+      that enables correct interpretation and application. Performance
+      depends on accumulated domain knowledge, not primarily on procedural
+      execution or interpersonal skill.
+    template_delta: skills/_templates/skill-type--domain-expertise.template.yaml
+    examples:
+      - Reps & Warranties (M&A)
+      - SEC Regulatory Compliance
+      - Aviation Industry Economics
+      - SaaS Business Model Mechanics
+    key_template_additions:
+      - authoritative_sources
+      - knowledge_currency_maintenance
+      - jurisdiction_or_context_variations
+      - common_misapplications_of_domain_knowledge
+
+  communication_persuasion:
+    code: communication-persuasion
+    description: >
+      Skills involving construction and delivery of persuasive communication
+      — written or verbal. Performance depends on rhetorical structure,
+      audience modeling, and message design.
+    template_delta: skills/_templates/skill-type--communication-persuasion.template.yaml
+    examples:
+      - Board-Level Communication
+      - LP Communication
+      - Crisis Communication
+      - Pitch / Investor Presentation
+      - Executive Memo Writing
+    key_template_additions:
+      - audience_modeling_framework
+      - rhetorical_structure_options
+      - message_hierarchy_design
+      - delivery_medium_variations

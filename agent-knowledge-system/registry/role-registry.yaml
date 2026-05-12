@@ -1,0 +1,155 @@
+# ============================================================
+# ROLE REGISTRY
+# Flat queryable index of all agent role definitions.
+# Query by: domain | seniority | id | tags
+#
+# ADD A ROLE: append an entry here whenever a new role
+# directory is created under agents/[domain]/[role-slug]/
+# ============================================================
+
+roles:
+
+# ── FINANCE ──────────────────────────────────────────────────
+
+  - id: private-equity-partner
+    display_name: "Private Equity Partner"
+    domain: finance
+    seniority: c-suite-equivalent
+    path: agents/finance/private-equity-partner/
+    profile: agents/finance/private-equity-partner/profile.yaml
+    knowledge_tree_local: agents/finance/private-equity-partner/knowledge-tree.yaml
+    knowledge_trees_shared:
+      - knowledge-trees/finance/private-equity.ktree.yaml
+    skills_ref: agents/finance/private-equity-partner/skills.yaml
+    relationships_ref: agents/finance/private-equity-partner/relationships.yaml
+    variants_dir: agents/finance/private-equity-partner/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    # stub | in-progress | complete | validated
+    tags: [deal-execution, capital-allocation, board-governance, investment-thesis]
+
+  - id: cfo
+    display_name: "Chief Financial Officer"
+    domain: finance
+    seniority: c-suite
+    path: agents/finance/cfo/
+    profile: agents/finance/cfo/profile.yaml
+    knowledge_tree_local: agents/finance/cfo/knowledge-tree.yaml
+    knowledge_trees_shared:
+      - knowledge-trees/finance/corporate-finance.ktree.yaml
+    skills_ref: agents/finance/cfo/skills.yaml
+    relationships_ref: agents/finance/cfo/relationships.yaml
+    variants_dir: agents/finance/cfo/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [financial-reporting, capital-structure, treasury, investor-relations]
+
+  - id: investment-banker
+    display_name: "Investment Banker (M&A / Capital Markets)"
+    domain: finance
+    seniority: senior
+    path: agents/finance/investment-banker/
+    profile: agents/finance/investment-banker/profile.yaml
+    knowledge_tree_local: agents/finance/investment-banker/knowledge-tree.yaml
+    knowledge_trees_shared:
+      - knowledge-trees/finance/capital-markets.ktree.yaml
+    skills_ref: agents/finance/investment-banker/skills.yaml
+    relationships_ref: agents/finance/investment-banker/relationships.yaml
+    variants_dir: agents/finance/investment-banker/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [deal-execution, valuation, pitchbook, client-coverage, capital-raises]
+
+# ── LEGAL ─────────────────────────────────────────────────────
+
+  - id: ma-attorney
+    display_name: "M&A Attorney"
+    domain: legal
+    seniority: senior
+    path: agents/legal/ma-attorney/
+    profile: agents/legal/ma-attorney/profile.yaml
+    knowledge_tree_local: agents/legal/ma-attorney/knowledge-tree.yaml
+    knowledge_trees_shared:
+      - knowledge-trees/legal/ma-law.ktree.yaml
+      - knowledge-trees/legal/corporate-governance.ktree.yaml
+    skills_ref: agents/legal/ma-attorney/skills.yaml
+    relationships_ref: agents/legal/ma-attorney/relationships.yaml
+    variants_dir: agents/legal/ma-attorney/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [purchase-agreement, reps-warranties, due-diligence, deal-structuring, negotiation]
+
+  - id: general-counsel
+    display_name: "General Counsel"
+    domain: legal
+    seniority: c-suite
+    path: agents/legal/general-counsel/
+    profile: agents/legal/general-counsel/profile.yaml
+    knowledge_tree_local: agents/legal/general-counsel/knowledge-tree.yaml
+    knowledge_trees_shared:
+      - knowledge-trees/legal/corporate-governance.ktree.yaml
+    skills_ref: agents/legal/general-counsel/skills.yaml
+    relationships_ref: agents/legal/general-counsel/relationships.yaml
+    variants_dir: agents/legal/general-counsel/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [legal-risk, compliance, board-governance, regulatory, litigation-management]
+
+# ── OPERATIONS ────────────────────────────────────────────────
+
+  - id: coo
+    display_name: "Chief Operating Officer"
+    domain: operations
+    seniority: c-suite
+    path: agents/operations/coo/
+    profile: agents/operations/coo/profile.yaml
+    knowledge_tree_local: agents/operations/coo/knowledge-tree.yaml
+    knowledge_trees_shared: []
+    skills_ref: agents/operations/coo/skills.yaml
+    relationships_ref: agents/operations/coo/relationships.yaml
+    variants_dir: agents/operations/coo/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [operational-excellence, process-improvement, execution, cross-functional]
+
+# ── TECHNOLOGY ────────────────────────────────────────────────
+
+  - id: cto
+    display_name: "Chief Technology Officer"
+    domain: technology
+    seniority: c-suite
+    path: agents/technology/cto/
+    profile: agents/technology/cto/profile.yaml
+    knowledge_tree_local: agents/technology/cto/knowledge-tree.yaml
+    knowledge_trees_shared: []
+    skills_ref: agents/technology/cto/skills.yaml
+    relationships_ref: agents/technology/cto/relationships.yaml
+    variants_dir: agents/technology/cto/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [architecture, engineering-leadership, product-technology, build-vs-buy]
+
+# ── STRATEGY ─────────────────────────────────────────────────
+
+  - id: management-consultant
+    display_name: "Management Consultant (Strategy)"
+    domain: strategy
+    seniority: senior
+    path: agents/strategy/management-consultant/
+    profile: agents/strategy/management-consultant/profile.yaml
+    knowledge_tree_local: agents/strategy/management-consultant/knowledge-tree.yaml
+    knowledge_trees_shared: []
+    skills_ref: agents/strategy/management-consultant/skills.yaml
+    relationships_ref: agents/strategy/management-consultant/relationships.yaml
+    variants_dir: agents/strategy/management-consultant/variants/
+    variant_count: 0
+    skills_count: 0
+    status: stub
+    tags: [strategy-frameworks, problem-structuring, slide-communication, client-management]

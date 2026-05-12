@@ -1,0 +1,946 @@
+################################################################################
+# MASTER SKILL TEMPLATE SCAFFOLD v1.0
+#
+# PURPOSE: A reusable schema for documenting any professional skill at expert
+#   grade. This file defines field structure, types, required/optional markers,
+#   and inline documentation. Fill in placeholder values for a specific skill.
+#
+# DESIGN SOURCES:
+#   - Bloom's Revised Taxonomy (Anderson & Krathwohl 2001): cognitive level
+#     hierarchy for knowledge dimensions
+#   - Gagné's Nine Events of Instruction: performance-based learning structure
+#   - Mager's ABCD Performance Objectives: Audience, Behavior, Condition, Degree
+#   - Army METL / T&EO format: task, conditions, standards, performance measures
+#   - ACGME Milestones / Dreyfus Model: novice→expert behavioral anchors
+#   - CFA Institute Learning Outcome Statements: command-verb skill specification
+#   - Cognitive Task Analysis / Critical Decision Method: tacit knowledge capture
+#   - Consulting firm methodology cards: step-by-step expert sequences
+#   - Declarative / Procedural / Conditional knowledge trichotomy
+#
+# NOTATION CONVENTIONS:
+#   <type: description>         = required field, fill with described value
+#   <type?: description>        = optional field, include when applicable
+#   [item1, item2]              = example list — replace with real entries
+#   # COMMENT                   = field-level documentation (do not delete)
+#   ## SECTION                  = major structural section
+################################################################################
+
+## ============================================================
+## SECTION 1: IDENTITY — What the skill IS
+## ============================================================
+
+skill:
+
+  # ── Core Identity ─────────────────────────────────────────
+
+  id: "<string: unique slug, kebab-case, e.g. 'discounted-cash-flow-modeling'>"
+  # Globally unique identifier. Used for cross-referencing between skills.
+
+  name: "<string: canonical human-readable name of the skill>"
+  # Use the name a senior practitioner would use, not a textbook euphemism.
+  # Prefer verb-noun: 'Structuring a Deposition', 'Executing a VATS Lobectomy'.
+
+  version: "<semver: e.g. '1.2.0'>"
+  # Increment minor on content updates; major on structural revisions.
+
+  domain: "<string: top-level professional domain, e.g. 'Corporate Law / M&A'>"
+  # Primary field. Use the most specific accurate label.
+
+  sub_domain: "<string?: narrower specialization, e.g. 'Cross-Border Acquisition'>"
+  # Optional. Use when the skill sits inside a recognized sub-field.
+
+  skill_type: "<enum: analytical | interpersonal | judgment | procedural | domain-expertise | communication>"
+  # See SKILL TYPE VARIATION SYSTEM section at end of this file.
+  # This field controls which type-specific delta fields apply.
+
+  bloom_level: "<enum: remember | understand | apply | analyze | evaluate | create>"
+  # Highest Bloom's Revised Taxonomy level a proficient practitioner operates at.
+  # Most real expert skills sit at 'analyze', 'evaluate', or 'create'.
+  # Do NOT default to 'apply' — that signals a surface-level entry.
+
+  dreyfus_target: "<enum: advanced-beginner | competent | proficient | expert>"
+  # The Dreyfus stage this skill entry targets for documentation.
+  # 'proficient' and 'expert' entries require richer conditional/judgment fields.
+
+  # ── Declarative Definition ─────────────────────────────────
+
+  declarative:
+    # WHAT IT IS — "knowing that"
+    # Sourced from: Bloom's factual+conceptual knowledge, CFA LOS model
+
+    definition: |
+      "<string: 1-3 sentence precise definition. State what the skill produces,
+      under what conditions it is exercised, and what domain it belongs to.
+      Avoid circular definitions ('this skill is the skill of...'). Write at the
+      level of a professional handbook, not a glossary.>"
+
+    underlying_theory: |
+      "<string?: The conceptual framework or theoretical model that explains WHY
+      this skill works. E.g., for negotiation: 'BATNA theory and integrative
+      bargaining (Fisher & Ury)'. Not required for purely procedural craft skills
+      but required for any analytical or judgment skill.>"
+
+    domain_model: |
+      "<string?: The mental model an expert uses to represent the problem space.
+      Describe how an expert structures the situation in their head — what
+      variables they track, what relationships they see, what pattern they
+      recognize. This is the key tacit knowledge capture field.>"
+
+  # ── Skill Vocabulary ───────────────────────────────────────
+
+  vocabulary:
+    # INSIDER LANGUAGE — terms of art that signal domain membership
+    # A novice who doesn't know these cannot read expert-level work in this skill.
+
+    core_terms:
+      # Required: 3–10 terms that are load-bearing jargon for this skill.
+      - term: "<string: term>"
+        definition: "<string: precise definition as used in THIS skill context>"
+        usage_note: "<string?: how and when practitioners actually use this term>"
+
+    common_misuses:
+      # Terms beginners misuse, or terms that mean different things inside vs.
+      # outside this domain. Expert credibility is often lost here.
+      - term: "<string>"
+        misuse: "<string: how non-experts misuse or misunderstand it>"
+        correct_use: "<string: how experts actually use it>"
+
+## ============================================================
+## SECTION 2: PREREQUISITES — What must be in place first
+## ============================================================
+
+  prerequisites:
+    # Sourced from: Gagné's "stimulate recall of prior learning" event;
+    #   ACGME milestone prerequisite competencies
+
+    required_skills:
+      # Other skills (by id) that MUST be present for this skill to function.
+      # These are hard gates — missing them causes the skill to fail, not degrade.
+      - skill_id: "<string: references another skill's id field>"
+        rationale: "<string: why this skill is a hard prerequisite>"
+
+    helpful_skills:
+      # Skills that meaningfully accelerate this skill but are not required.
+      - skill_id: "<string>"
+        rationale: "<string>"
+
+    required_knowledge:
+      # Factual/conceptual knowledge domains (not skills) that must be present.
+      # E.g., 'Reading financial statements', 'Basic contract law'
+      - "<string: knowledge domain>"
+
+    experience_threshold:
+      minimum: "<string: e.g. '18 months direct client work in M&A'>"
+      # Minimum real-world exposure before this skill can be exercised responsibly.
+      # Do not leave blank or set to '0' — that signals superficial documentation.
+      quality_over_quantity_note: "<string?: what kinds of experiences matter most>"
+
+    tools_and_access:
+      # Physical, digital, or institutional access required.
+      - "<string: e.g. 'Bloomberg Terminal access', 'bar admission', 'OR privileges'>"
+
+## ============================================================
+## SECTION 3: CONDITIONAL KNOWLEDGE — When to apply / when not to
+## ============================================================
+
+  conditional:
+    # KNOWING WHEN — the highest-order knowledge type; separates experts from
+    #   competent practitioners. Sourced from: CDM probe questions, consulting
+    #   methodology selection heuristics, military decision criteria.
+
+    apply_when:
+      # Specific situational triggers that call for this skill.
+      # Be concrete: describe the observable conditions, not generic 'when needed'.
+      - condition: "<string: specific observable situation>"
+        signal: "<string: what the practitioner notices that tells them this is the right skill>"
+        urgency: "<enum: immediate | planned | opportunistic>"
+
+    do_not_apply_when:
+      # Counterindications — when this skill would be wrong or harmful to use.
+      # This is often the most valuable field for expert-grade documentation.
+      - condition: "<string: situation where this skill is contraindicated>"
+        reason: "<string: why this skill fails or causes harm here>"
+        better_alternative: "<string?: what skill or approach to use instead>"
+
+    judgment_triggers:
+      # Points in the situation where expert judgment diverges from rule-following.
+      # These are the CDM 'recognition primed decision' moments.
+      # Novices apply rules here; experts read context and deviate purposefully.
+      - trigger: "<string: what the expert notices>"
+        novice_response: "<string: what a novice does at this moment>"
+        expert_response: "<string: what an expert does differently and why>"
+        cue_that_reveals_expertise: "<string: the specific detail experts notice that novices miss>"
+
+    scope_boundaries:
+      in_scope: "<string: what problems this skill is designed to solve>"
+      out_of_scope: "<string: problems it is often misapplied to — be specific>"
+      escalation_threshold: "<string: when to escalate beyond this skill to a higher-level intervention>"
+
+## ============================================================
+## SECTION 4: PROCEDURAL KNOWLEDGE — How to perform it step by step
+## ============================================================
+
+  procedural:
+    # HOW TO DO IT — "knowing how"
+    # Sourced from: Gagné's performance elicitation, Army T&EO performance steps,
+    #   consulting firm methodology cards, CTA hierarchical task analysis
+
+    execution_sequence:
+      # THE EXPERT SEQUENCE. Not generic steps — the real expert order.
+      # Each step must be specific enough that an advanced-beginner could
+      # distinguish doing it right from doing it wrong.
+      # Format draws from Army T&EO performance steps + CDM probe structure.
+
+      - step_number: 1
+        step_name: "<string: short action-verb label, e.g. 'Frame the problem space'>"
+        what_to_do: |
+          "<string: precise description of the action. Start with a verb.
+          Describe what the practitioner does, not what they think about.>"
+        why_this_order: "<string: why this step precedes the next — the logical dependency>"
+        inputs_consumed: "<list of strings: what information/artifacts this step requires>"
+        outputs_produced: "<list of strings: what this step creates or determines>"
+        time_estimate: "<string?: typical time range in expert execution>"
+        decision_gate: "<boolean: true if expert judgment is required to exit this step>"
+
+        # If decision_gate: true, fill this block:
+        gate_criteria:
+          proceed_if: "<string: observable conditions that allow moving to next step>"
+          pause_if: "<string: conditions that require more work at this step>"
+          abort_if: "<string: conditions that signal the overall skill should stop>"
+
+        expert_move:
+          # The non-obvious thing experts do at this step that novices miss.
+          # This is the primary tacit knowledge capture target per CDM methodology.
+          description: "<string: what the expert does here that isn't in the written procedure>"
+          why_novices_miss_it: "<string: cognitive or experiential reason novices skip this>"
+
+        common_errors_at_this_step:
+          - error: "<string: specific mistake made at this step>"
+            error_type: "<enum: omission | commission | timing | sequencing>"
+            consequence: "<string: what goes wrong downstream if this error is made>"
+            detection_signal: "<string: how to recognize this error has occurred>"
+
+      # Repeat step block for each step. Most expert skills have 5–12 steps.
+      # If more than 12, consider whether this is two skills merged into one.
+
+    parallel_tracks:
+      # Steps that run concurrently rather than sequentially.
+      # Many expert skills involve managing parallel workstreams.
+      - track_name: "<string>"
+        runs_alongside_steps: "<list of step_numbers>"
+        description: "<string>"
+
+    feedback_loops:
+      # Points where the practitioner checks their own work mid-execution
+      # and adjusts course. Experts build in more checkpoints than novices.
+      - after_step: "<integer: step_number>"
+        check: "<string: what the practitioner verifies>"
+        adjustment: "<string: how they course-correct if the check fails>"
+
+    pacing_and_tempo:
+      # Expert-level knowledge about speed, rhythm, and timing.
+      # Often entirely tacit and rarely documented.
+      typical_duration: "<string: realistic time range for full execution>"
+      critical_speed_moments:
+        - moment: "<string: point in execution where speed matters>"
+          why: "<string: what goes wrong if you're too fast or too slow here>"
+      deceleration_signals:
+        - signal: "<string: what the expert notices that tells them to slow down>"
+          implication: "<string>"
+
+## ============================================================
+## SECTION 5: DECISION GATES — Expert judgment checkpoints
+## ============================================================
+
+  decision_gates:
+    # Expanded from the step-level gate_criteria. These are high-stakes
+    # branch points where the entire direction of execution changes.
+    # Sourced from: CDM recognition-primed decision model, consulting
+    #   'hypothesis tree' approach, military 'decision point' concept.
+
+    - gate_id: "<string: e.g. 'DG-01'>"
+      gate_name: "<string: descriptive label>"
+      occurs_after_step: "<integer>"
+      gate_question: "<string: the core question the practitioner must answer>"
+
+      information_needed:
+        # What the practitioner must have gathered/analyzed to answer the question.
+        - "<string: specific information item>"
+
+      decision_options:
+        - option: "<string: decision branch label>"
+          condition: "<string: when this option applies>"
+          consequence: "<string: what path this opens>"
+          expert_note: "<string?: non-obvious considerations experts weigh here>"
+
+      expert_vs_novice_split:
+        novice_tendency: "<string: what novices do at this gate (usually: pick the obvious option too fast)>"
+        expert_behavior: "<string: how experts approach this gate differently>"
+        cognitive_tool_experts_use: "<string: the mental model/heuristic experts apply>"
+
+## ============================================================
+## SECTION 6: FAILURE MODES — Specific ways this skill goes wrong
+## ============================================================
+
+  failure_modes:
+    # Sourced from: CTA 'near-miss' analysis, military after-action reviews,
+    #   medical morbidity/mortality conference format, consulting post-mortems.
+    # This section separates mediocre skill documentation from expert-grade.
+    # Be specific — not 'poor communication' but 'mis-stating the scope before
+    # the client has agreed on assumptions'.
+
+    - failure_id: "<string: e.g. 'FM-01'>"
+      name: "<string: concise failure name>"
+      failure_type: "<enum: strategic | tactical | timing | omission | commission | judgment | interpersonal>"
+      description: |
+        "<string: precise description of what went wrong and how.
+        Describe from the perspective of an observer watching the failure unfold.>"
+      subtle: "<boolean: true if this failure is easy to miss until downstream damage appears>"
+      practitioner_level_most_vulnerable:
+        "<enum: novice | advanced-beginner | competent | proficient>"
+        # Even proficient practitioners have failure modes — document them.
+      root_cause: "<string: the deeper reason this failure occurs>"
+      early_warning_signals:
+        - "<string: observable signal that this failure is beginning>"
+      recovery_actions:
+        - "<string: what to do if this failure is detected>"
+      prevention: "<string: how to structurally prevent this failure mode>"
+
+## ============================================================
+## SECTION 7: OUTPUT ARTIFACTS — What successful execution produces
+## ============================================================
+
+  output_artifacts:
+    # Sourced from: Gagné's 'assess performance' event, METL proficiency standards,
+    #   CFA LOS 'command word' outputs (describe, calculate, construct, evaluate)
+
+    primary_deliverable:
+      name: "<string: name of the main output>"
+      description: "<string: what it contains and what form it takes>"
+      quality_criteria:
+        # Objective markers of a well-executed output.
+        # These must be specific enough to use as an evaluation rubric.
+        - criterion: "<string: observable quality marker>"
+          threshold_acceptable: "<string: minimum bar>"
+          threshold_excellent: "<string: expert-grade standard>"
+
+    secondary_outputs:
+      - name: "<string>"
+        description: "<string>"
+        optional: "<boolean>"
+
+    negative_indicators:
+      # Artifacts or outputs that signal the skill was executed poorly.
+      # Failure artifacts are as important as success artifacts.
+      - "<string: observable sign of poor execution in the output>"
+
+    quality_standards:
+      # External or professional standards the output must meet.
+      - standard: "<string: e.g. 'SEC Regulation S-K', 'APA 7th Edition', 'GAAP'>"
+        how_applied: "<string>"
+
+## ============================================================
+## SECTION 8: INSIDER NUANCES — What separates good from great
+## ============================================================
+
+  insider_nuances:
+    # The tacit expert layer. The things you only learn from years of practice
+    # or from a great mentor. Primary CDM knowledge capture target.
+    # Sourced from: Critical Decision Method 'what would a novice miss?' probe,
+    #   consulting 'rules of thumb', Dreyfus expert intuition documentation.
+
+    - nuance_id: "<string: e.g. 'NU-01'>"
+      domain: "<enum: perceptual | timing | relational | analytical | strategic | ethical>"
+      # perceptual: what experts see that novices don't
+      # timing: when experts act vs. when novices act
+      # relational: how experts manage people/stakeholders differently
+      # analytical: what experts calculate or model that novices skip
+      # strategic: how experts position their work in the larger context
+      # ethical: professional judgment calls that aren't in any rulebook
+      description: |
+        "<string: concrete description of the nuance. Be specific enough that
+        someone could recognize whether they are or aren't doing this.>"
+      why_it_matters: "<string: downstream consequence if you miss this nuance>"
+      how_to_develop: "<string?: how a practitioner builds this capacity>"
+      example: "<string?: brief illustrative example — anonymized if sensitive>"
+
+## ============================================================
+## SECTION 9: INTEGRATION POINTS — How this skill connects to others
+## ============================================================
+
+  integration:
+    # Sourced from: ADDIE model transfer phase, Gagné's 'enhance retention and
+    #   transfer' event, consulting 'workstream' architecture
+
+    upstream_skills:
+      # Skills that typically feed INTO this skill's execution.
+      - skill_id: "<string>"
+        handoff: "<string: what artifact or information transfers from that skill to this one>"
+
+    downstream_skills:
+      # Skills that typically consume THIS skill's outputs.
+      - skill_id: "<string>"
+        handoff: "<string: what this skill produces that feeds the next skill>"
+
+    peer_skills:
+      # Skills used simultaneously or in alternation with this skill.
+      - skill_id: "<string>"
+        relationship: "<string: how they interact in practice>"
+
+    workflow_context:
+      typical_workflow_position: "<enum: initiating | developing | gate-checking | finalizing | ongoing>"
+      # Where this skill typically sits in a larger professional workflow.
+      orchestrating_skill: "<string?: the higher-order skill that coordinates this one>"
+      embedded_in_workflows:
+        - "<string: named professional workflow this skill appears in>"
+
+    anti_patterns_in_sequencing:
+      # Ways practitioners misorder or misplace this skill in workflows.
+      - "<string: specific missequencing error and its consequence>"
+
+## ============================================================
+## SECTION 10: PROFICIENCY CALIBRATION — Behavioral anchors by level
+## ============================================================
+
+  proficiency_levels:
+    # Sourced from: ACGME Milestones format, Dreyfus 5-stage model,
+    #   CFA command-word progression (identify → evaluate → synthesize)
+    # Each level describes OBSERVABLE behavior, not claimed knowledge.
+
+    novice:
+      behavioral_markers:
+        - "<string: observable behavior a novice exhibits with this skill>"
+      characteristic_errors:
+        - "<string: typical novice error>"
+      supervision_required: "<string: what oversight level is appropriate>"
+
+    advanced_beginner:
+      behavioral_markers:
+        - "<string>"
+      characteristic_errors:
+        - "<string>"
+      supervision_required: "<string>"
+
+    competent:
+      behavioral_markers:
+        - "<string>"
+      characteristic_errors:
+        - "<string>"
+      supervision_required: "<string>"
+
+    proficient:
+      behavioral_markers:
+        - "<string>"
+      characteristic_errors:
+        - "<string>"
+      supervision_required: "<string>"
+
+    expert:
+      behavioral_markers:
+        - "<string: observable behavior — what you see when watching an expert>"
+      # Expert errors are real and should be documented — experts fail differently.
+      characteristic_errors:
+        - "<string: subtle expert-level failure mode>"
+      supervision_required: "Peer review for novel or high-stakes applications only"
+
+## ============================================================
+## SECTION 11: CONDITIONS AND STANDARDS (Army T&EO Format)
+## ============================================================
+
+  conditions_and_standards:
+    # Directly adapted from Army Training and Evaluation Outline format.
+    # Provides the METL-style objective statement for this skill.
+
+    task_statement: "<string: 'Given [conditions], [performer] will [action] to [standard]'>"
+    # Example: "Given a target company data room and 72-hour timeline, the analyst
+    #   will produce a quality-of-earnings assessment meeting investor-grade accuracy
+    #   standards with no material misstatements."
+
+    conditions:
+      environmental:
+        - "<string: context conditions — time pressure, information completeness, etc.>"
+      resources_available:
+        - "<string: tools, team, data access>"
+      constraints:
+        - "<string: limitations under which the skill must function>"
+
+    standards:
+      minimum_acceptable:
+        - "<string: measurable threshold for acceptable performance>"
+      target:
+        - "<string: measurable threshold for proficient performance>"
+      exemplary:
+        - "<string: what expert-grade performance looks like — observable and specific>"
+
+## ============================================================
+## SECTION 12: METADATA
+## ============================================================
+
+  metadata:
+    created_by: "<string: author/team>"
+    created_date: "<date: ISO 8601>"
+    last_reviewed: "<date: ISO 8601>"
+    reviewed_by: "<string?: reviewer name and credential>"
+    review_cycle: "<string: e.g. 'Annual' or 'On major practice change'>"
+    status: "<enum: draft | peer-reviewed | validated | deprecated>"
+    # 'validated' requires sign-off from at least one domain expert with
+    # 10+ years practice experience in this specific skill.
+    source_experts:
+      - name: "<string?: anonymized or named>"
+        credential: "<string?: e.g. 'Partner, Big 4 Firm, 20 years M&A'>"
+        elicitation_method: "<enum: CDM-interview | think-aloud | document-analysis | survey>"
+    related_certifications:
+      - "<string: professional certification where this skill is tested>"
+    regulatory_context: "<string?: regulatory regime governing this skill's practice>"
+    change_log:
+      - version: "<semver>"
+        date: "<date>"
+        summary: "<string>"
+
+
+################################################################################
+# SKILL TYPE VARIATION SYSTEM
+#
+# The master template above applies to ALL skills. Below are TYPE-SPECIFIC DELTAS
+# showing which fields to expand, contract, or add for each skill type.
+# These are MODIFICATIONS to the master, not replacements.
+# Only show fields that differ from the master defaults.
+################################################################################
+
+skill_type_variations:
+
+  ## ==========================================================================
+  ## TYPE 1: ANALYTICAL / QUANTITATIVE
+  ## Examples: Financial modeling, statistical analysis, legal brief writing,
+  ##   medical diagnosis from imaging, due diligence, risk assessment
+  ## ==========================================================================
+
+  analytical:
+
+    classification_criteria:
+      - "Skill produces a structured artifact with quantitative or logical conclusions"
+      - "Correctness is (at least partially) verifiable against objective criteria"
+      - "Expert performance is characterized by model precision and assumption hygiene"
+
+    master_template_modifications:
+
+      declarative__domain_model:
+        expand: true
+        added_fields:
+          analytical_framework: "<string: the specific quantitative or logical framework used>"
+          key_assumptions: "<list: the assumptions the model depends on most>"
+          sensitivity_drivers: "<list: variables whose changes most affect the output>"
+
+      procedural__execution_sequence:
+        added_step_fields:
+          formula_or_method: "<string?: specific calculation, test, or logical operation at this step>"
+          data_requirements: "<string: what data must be present and at what quality>"
+          precision_threshold: "<string: acceptable error tolerance at this step>"
+
+      output_artifacts:
+        added_fields:
+          model_documentation: "<string: how the analysis must be documented for replication>"
+          sensitivity_tables: "<boolean: whether sensitivity/scenario outputs are required>"
+          assumption_register: "<boolean: whether a formal assumption log is required>"
+
+      failure_modes:
+        type_specific_failures:
+          - "Garbage-in-garbage-out: precision in method masking bad input assumptions"
+          - "Model-centric thinking: optimizing the model rather than the real-world decision"
+          - "False precision: reporting 6 significant figures when input data warrants 2"
+          - "Anchoring bias: initial estimate distorting all subsequent refinements"
+
+      insider_nuances:
+        type_specific_nuances:
+          - "Experts validate assumptions before they run the model — novices validate after"
+          - "Experts document what the model cannot tell you, not just what it can"
+
+  ## ==========================================================================
+  ## TYPE 2: INTERPERSONAL / RELATIONSHIP
+  ## Examples: Negotiation, client management, performance feedback delivery,
+  ##   stakeholder alignment, interviewing witnesses, medical informed consent
+  ## ==========================================================================
+
+  interpersonal:
+
+    classification_criteria:
+      - "Skill outcome depends critically on the behavior and internal state of another person"
+      - "Expert performance cannot be replicated by following steps alone — real-time adaptation is core"
+      - "Failure modes are disproportionately about timing, tone, and relational positioning"
+
+    master_template_modifications:
+
+      declarative__domain_model:
+        added_fields:
+          counterpart_model: "<string: how the expert models the other person's interests, constraints, and psychology>"
+          trust_architecture: "<string: how trust is built and what destroys it in this skill context>"
+
+      conditional__judgment_triggers:
+        expand: true
+        added_trigger_fields:
+          emotional_state_read: "<string: what the expert reads in the counterpart's emotional state at this trigger>"
+          adaptation_move: "<string: how the expert adjusts their approach based on that read>"
+
+      procedural__execution_sequence:
+        added_step_fields:
+          counterpart_objective: "<string: what the other person needs to experience at this step>"
+          read_signal: "<string: how to know this step is landing correctly>"
+          recovery_if_misread: "<string: what to do if the step goes wrong>"
+
+      new_section__relationship_dynamics:
+        # Added section not in master template — only for interpersonal skills
+        opening_conditions:
+          power_mapping: "<string: how to assess the power balance before starting>"
+          rapport_baseline: "<string: what trust baseline is required before substantive engagement>"
+        live_calibration:
+          attention_signals: "<list: observable cues that engagement is high vs. flagging>"
+          resistance_signals: "<list: observable cues that counterpart is resistant>"
+          de_escalation_moves: "<list: specific actions to reduce resistance>"
+        closing_conditions:
+          commitment_test: "<string: how to verify the counterpart is genuinely committed vs. compliant>"
+
+      failure_modes:
+        type_specific_failures:
+          - "Premature advocacy: stating your position before the counterpart feels heard"
+          - "Agreement theater: achieving verbal yes without genuine commitment"
+          - "Rapport substitution: being liked becoming more important than being effective"
+          - "Emotion contamination: the practitioner's own affect distorting their read"
+
+  ## ==========================================================================
+  ## TYPE 3: JUDGMENT / HEURISTIC
+  ## Examples: Courtroom strategy, surgical intraoperative decisions,
+  ##   investment thesis judgment, crisis management, editorial judgment
+  ## ==========================================================================
+
+  judgment:
+
+    classification_criteria:
+      - "Skill is primarily a decision, not an artifact"
+      - "The right answer is deeply context-dependent and cannot be read from a rule"
+      - "Expert and novice diverge most sharply on what information to weight"
+      - "Outcome is not immediately verifiable — feedback is delayed or ambiguous"
+
+    master_template_modifications:
+
+      declarative__domain_model:
+        added_fields:
+          pattern_library: |
+            "<string: the repertoire of recognized patterns experts draw on.
+            Describe the most important 3-5 situation-patterns and their
+            associated judgment responses. This is the CDM 'recognition-
+            primed decision' knowledge.>"
+          base_rates: "<string: the prior probabilities experts carry for common situations>"
+
+      conditional:
+        expand: true
+        # Judgment skills require the most expanded conditional section
+        added_fields:
+          information_hierarchy:
+            "<list: ordered by weight — what information the expert consults first,
+            second, third when forming judgment. This ordering is tacit and critical.>"
+          disconfirmation_discipline:
+            "<string: how experts actively look for evidence that contradicts their
+            initial hypothesis — the key discipline separating proficient from expert>"
+
+      decision_gates:
+        expand: true
+        added_gate_fields:
+          reversibility: "<enum: reversible | partially-reversible | irreversible>"
+          # Irreversible decisions warrant higher gate scrutiny
+          information_sufficiency_test: "<string: minimum information required before deciding>"
+          devil's_advocate_check: "<string: the strongest counter-argument to the leading option>"
+
+      procedural__execution_sequence:
+        contract: true
+        note: |
+          Judgment skills have fewer fixed sequential steps. The procedural section
+          for judgment skills should focus on the DELIBERATION PROCESS rather than
+          a task sequence. Steps describe phases of reasoning, not actions.
+
+      failure_modes:
+        type_specific_failures:
+          - "Overconfidence in sparse data: deciding at expert speed on novice-level information"
+          - "Hindsight construction: narrative confabulation mistaken for pattern recognition"
+          - "Sycophantic adjustment: expert judgment shifting toward what the client wants to hear"
+          - "Availability bias: recent vivid cases dominating base-rate reasoning"
+
+      insider_nuances:
+        type_specific_nuances:
+          - "Experts know which of their heuristics to distrust in novel situations"
+          - "Expert judgment includes knowing when to slow down and reason explicitly"
+
+  ## ==========================================================================
+  ## TYPE 4: PROCEDURAL / TECHNICAL
+  ## Examples: Surgical technique, code deployment, audit sampling, lab protocol,
+  ##   contract drafting, financial close process
+  ## ==========================================================================
+
+  procedural_technical:
+
+    classification_criteria:
+      - "Correct execution has a verifiable step sequence"
+      - "Deviation from the sequence has predictable, categorizable consequences"
+      - "Expert performance shows in efficiency, error prevention, and edge-case handling"
+
+    master_template_modifications:
+
+      procedural__execution_sequence:
+        expand: true
+        added_step_fields:
+          verification_method: "<string: how to confirm this step was executed correctly>"
+          rollback_procedure: "<string?: how to undo this step if the next step reveals an error>"
+          automation_candidate: "<boolean: whether this step is typically automated in expert practice>"
+          failure_signature: "<string: observable signal that this specific step has failed>"
+
+      new_section__safety_and_compliance:
+        # Added section for procedural/technical skills — not in master
+        mandatory_checks:
+          - check: "<string: required verification before proceeding>"
+            gate_type: "<enum: self-check | peer-check | system-check>"
+        abort_criteria:
+          - "<string: condition that requires halting execution entirely>"
+        documentation_requirements:
+          real_time: "<boolean: must be documented during execution, not after>"
+          required_fields: "<list: specific data points that must be recorded>"
+
+      failure_modes:
+        type_specific_failures:
+          - "Step elision under time pressure: skipping verification steps when busy"
+          - "Normalization of deviance: repeated small deviations accumulating to catastrophic failure"
+          - "Expertise-induced complacency: experts skipping checks novices would make"
+
+  ## ==========================================================================
+  ## TYPE 5: DOMAIN EXPERTISE
+  ## Examples: Tax law interpretation, medical diagnosis, actuarial valuation,
+  ##   archaeological dating, structural engineering assessment
+  ## ==========================================================================
+
+  domain_expertise:
+
+    classification_criteria:
+      - "Skill requires deep, specialized factual knowledge that takes years to accumulate"
+      - "The knowledge base changes (regulations change, science advances) — currency matters"
+      - "Expert-novice gap is primarily in knowledge breadth AND pattern recognition in that knowledge"
+
+    master_template_modifications:
+
+      declarative:
+        added_fields:
+          knowledge_currency_requirements:
+            "<string: how frequently the underlying knowledge base changes and what keeping
+            current requires — e.g., 'Federal tax code: must track annual legislative changes,
+            IRS rulings, and circuit court decisions'>"
+          authoritative_sources:
+            - source: "<string: primary authoritative reference>"
+              access: "<string: how to access it>"
+              update_frequency: "<string>"
+
+      vocabulary:
+        expand: true
+        added_fields:
+          regulatory_citation_format: "<string?: how to cite authority correctly in this domain>"
+          knowledge_boundary_markers:
+            "<string: the specific edges of what this domain expertise covers vs. adjacent
+            expertise that must be brought in. Experts know their jurisdictional limits.>"
+
+      failure_modes:
+        type_specific_failures:
+          - "Knowledge staleness: applying outdated authority as if current"
+          - "Jurisdiction conflation: applying rules from one context to another"
+          - "Confident incompetence: opining outside expertise boundary without disclosure"
+
+  ## ==========================================================================
+  ## TYPE 6: COMMUNICATION / PERSUASION
+  ## Examples: Expert witness testimony, investor pitch, board presentation,
+  ##   appellate argument, clinical disclosure, crisis communication
+  ## ==========================================================================
+
+  communication:
+
+    classification_criteria:
+      - "Skill is oriented toward changing the audience's understanding, belief, or action"
+      - "Expert performance requires real-time audience modeling"
+      - "The same content fails or succeeds based on delivery and framing"
+
+    master_template_modifications:
+
+      declarative__domain_model:
+        added_fields:
+          audience_model: "<string: how the expert models audience knowledge, biases, and resistance>"
+          message_architecture: "<string: the structural logic of how the communication is organized>"
+
+      new_section__rhetoric_and_framing:
+        # Added section for communication skills — not in master
+        core_message_requirements:
+          headline_test: "<string: can the core message be stated in 15 words?>"
+          so_what_test: "<string: does every component answer why the audience should care?>"
+        framing_choices:
+          - frame: "<string: framing option>"
+            best_for_audience: "<string>"
+            risk: "<string>"
+        objection_architecture:
+          anticipated_objections:
+            - objection: "<string>"
+              preemptive_response: "<string>"
+              live_response: "<string>"
+
+      procedural__execution_sequence:
+        added_step_fields:
+          audience_cue_to_monitor: "<string: what feedback signal to watch at this step>"
+          pivot_trigger: "<string: when to deviate from planned sequence>"
+          recovery_script: "<string?: what to say if this step lands poorly>"
+
+      failure_modes:
+        type_specific_failures:
+          - "Inside-out communication: organized for the speaker's logic, not the audience's comprehension"
+          - "Precision without clarity: technically accurate but incomprehensible to the audience"
+          - "Style-substance inversion: delivery excellence masking weak underlying argument"
+          - "False consensus: reading polite silence as agreement"
+
+
+################################################################################
+# TEMPLATE VALIDATION CHECKLIST
+#
+# Apply this checklist to any filled skill entry before marking it 'peer-reviewed'.
+# A skill entry must pass ALL 12 criteria to achieve expert-grade status.
+################################################################################
+
+template_validation_checklist:
+
+  - id: "VC-01"
+    criterion: "Specificity over generality"
+    test: |
+      Every procedure step starts with an unambiguous action verb and names
+      specific inputs and outputs. No step reads 'analyze the situation' or
+      'consider the options' — these are ghost steps with no procedural content.
+    failure_signal: "Any step that could appear in a skill from a different domain"
+
+  - id: "VC-02"
+    criterion: "Conditional knowledge is populated and non-trivial"
+    test: |
+      The do_not_apply_when field contains at least 2 specific counterindications
+      with named alternative approaches. 'Use with caution' is not a counterindication.
+    failure_signal: "do_not_apply_when is empty or contains only generic cautions"
+
+  - id: "VC-03"
+    criterion: "Failure modes are specific and expert-grade"
+    test: |
+      At least one failure mode is marked subtle: true AND targets
+      practitioner_level: proficient or expert. Shallow entries only document
+      novice errors. Expert documentation also documents expert failure modes.
+    failure_signal: "All failure modes are obvious and target novice-only practitioners"
+
+  - id: "VC-04"
+    criterion: "Insider nuances are genuinely tacit"
+    test: |
+      Each insider nuance must be something not found in any textbook or
+      standard training program on this skill. If it reads like a tip from
+      a training manual, it fails this criterion.
+    failure_signal: "Nuances that appear in any introductory course on this skill"
+
+  - id: "VC-05"
+    criterion: "Vocabulary includes common misuses"
+    test: |
+      The common_misuses block contains at least 2 entries. Terms that
+      beginners misuse or confuse are domain-specific markers of expertise.
+    failure_signal: "common_misuses is empty or omitted"
+
+  - id: "VC-06"
+    criterion: "Decision gates include expert-novice split"
+    test: |
+      Each decision gate explicitly documents what novices do vs. what experts
+      do, and names the cognitive tool or heuristic experts apply.
+    failure_signal: "Decision gates describe options without describing the expert's reasoning process"
+
+  - id: "VC-07"
+    criterion: "Proficiency levels use observable behavioral language"
+    test: |
+      No proficiency level description uses the words 'understands', 'knows',
+      or 'is familiar with'. Every marker describes something an observer could
+      see or measure.
+    failure_signal: "Any proficiency level that relies on unobservable internal states"
+
+  - id: "VC-08"
+    criterion: "Prerequisites are real gates, not suggestions"
+    test: |
+      Each required_skill entry includes a rationale that explains specifically
+      how missing that skill causes this skill to fail — not just 'it helps'.
+    failure_signal: "Prerequisites listed without explaining the failure mechanism"
+
+  - id: "VC-09"
+    criterion: "Output artifacts include negative indicators"
+    test: |
+      The negative_indicators block under output_artifacts contains at least
+      3 specific signs of poor execution visible in the output. These must be
+      artifact-observable, not process-observable.
+    failure_signal: "negative_indicators is empty or contains process descriptions instead of output signals"
+
+  - id: "VC-10"
+    criterion: "Conditions and standards are measurable"
+    test: |
+      The task_statement uses the format 'Given [conditions], [performer] will
+      [action] to [standard]'. Standards specify thresholds, not adjectives.
+      'Meets investor-grade accuracy' fails. '±5% of audited figure' passes.
+    failure_signal: "Standards contain only qualitative adjectives with no measurable threshold"
+
+  - id: "VC-11"
+    criterion: "Expert moves are documented at each procedural step"
+    test: |
+      Every execution step with decision_gate: true has a populated expert_move
+      block. Expert moves must be non-obvious and justified.
+    failure_signal: "expert_move fields are empty, generic, or identical across steps"
+
+  - id: "VC-12"
+    criterion: "Source experts are identified and elicitation is documented"
+    test: |
+      At least one source_expert entry exists with credential and
+      elicitation_method. A skill with no documented expert source is a
+      synthesized summary, not a knowledge-engineering product.
+    failure_signal: "metadata.source_experts is empty"
+
+
+################################################################################
+# ANTI-PATTERN GUIDE
+#
+# How to distinguish a shallow, surface-level skill entry from an expert-grade one.
+################################################################################
+
+anti_patterns:
+
+  shallow_surface_level:
+    description: |
+      A shallow skill entry looks like a Wikipedia article or a chapter summary.
+      It documents what the practitioner should know, not what they actually do.
+      It is organized for comprehensiveness, not for transfer.
+    specific_signs:
+      - "Procedure steps are named 'Step 1: Plan', 'Step 2: Execute', 'Step 3: Review'"
+      - "Failure modes section lists 'poor communication' and 'insufficient preparation'"
+      - "Insider nuances reads like best-practice tips from a certification study guide"
+      - "Vocabulary defines terms as a dictionary would, without usage context"
+      - "Conditional knowledge is 'use when appropriate' with no specific triggers"
+      - "Proficiency levels all say 'understands X at increasing depth'"
+      - "Decision gates are not present — execution is presented as purely linear"
+      - "Output artifacts describe format, not quality markers"
+      - "No failure modes target proficient or expert practitioners"
+      - "Prerequisites are listed as 'familiarity with' rather than functional capability thresholds"
+      - "No expert source is cited — knowledge appears derived from secondary literature only"
+      - "Integration section is empty or just lists adjacent skills without describing handoffs"
+
+  expert_grade:
+    description: |
+      An expert-grade entry is constructed from elicited practitioner knowledge.
+      It could be handed to an advanced beginner and meaningfully accelerate their
+      development. It contains information that cannot be found in any textbook.
+    specific_signs:
+      - "Procedure steps include specific 'expert moves' that differ from written protocol"
+      - "Failure modes include subtle: true entries targeting proficient practitioners"
+      - "Insider nuances contain counterintuitive or counter-training-program content"
+      - "Conditional knowledge names specific situational triggers with observable signals"
+      - "Vocabulary includes misuse patterns that reveal insider domain knowledge"
+      - "Decision gates explicitly contrast novice and expert responses at the same branch"
+      - "Proficiency levels describe observable behaviors a third party could confirm"
+      - "Output artifacts include negative indicators specific to this skill's failure patterns"
+      - "Integration section describes specific artifact handoffs between named adjacent skills"
+      - "Source experts are documented with credential and elicitation method"
+      - "Common errors at each procedural step include detection signals"
+      - "Pacing and tempo section contains expert-specific timing knowledge"

@@ -1,0 +1,516 @@
+# ============================================================
+# CONNECTION / RELATIONSHIP TEMPLATE SCAFFOLD v1.0
+# Professional Agent Knowledge System
+#
+# PURPOSE: Define the interaction contract between two professional
+# role agents. This is NOT an org chart. It is a full specification
+# of information flows, authority boundaries, escalation logic,
+# communication norms, and agent routing rules.
+#
+# RESEARCH BASIS:
+#   - RACI / RASCI / DACI / RAPID decision frameworks
+#   - Team Topologies (Skelton & Pais) — interaction modes
+#   - TOGAF stakeholder mapping / Zachman framework
+#   - Boundary-spanning organizational behavior research
+#   - Law firm ethics walls and information firewall design
+#   - Software interface contract patterns adapted for human roles
+#   - Aviation CRM authority gradient research (SKYbrary)
+#   - Surgical team authority gradient studies
+# ============================================================
+
+
+# ─────────────────────────────────────────────────────────────
+# RELATIONSHIP TYPE TAXONOMY
+# Classify any relationship into exactly ONE primary type.
+# ─────────────────────────────────────────────────────────────
+
+# HD — Hierarchical Directive
+#   One role has formal authority over the other.
+#   Decisions flow downward; accountability flows upward.
+#   CRITICAL RISK: Steep gradients suppress legitimate dissent.
+#   REQUIRED: speak_up_protocol when gradient = steep or critical.
+
+# PC — Peer Collaborative
+#   Two roles of equivalent standing work jointly toward a shared
+#   deliverable. Neither can override the other's domain.
+#   CRITICAL RISK: Escalation never happens; impasse gets masked.
+
+# AC — Advisory Consultative
+#   One role provides expertise that informs but does not bind
+#   the other. Advisor has no authority over outcomes.
+#   CRITICAL RISK: Advice treated as binding when it is not.
+
+# CS — Client Service
+#   One role delivers a defined product or service to another.
+#   Demand-supply relationship with an explicit SLA.
+#   CRITICAL RISK: Service degrades without detection.
+
+# OG — Oversight Governance
+#   One role monitors, audits, or sets standards for another's
+#   conduct without directing day-to-day work.
+#   CRITICAL RISK: Watchdog learns of problems only after harm.
+
+# DT — Deal Team Integrated
+#   Multiple roles assembled into a temporary, goal-bounded team.
+#   Matrix authority: domain authority + deal leadership authority.
+#   CRITICAL RISK: Matrix authority creates conflicting direction.
+
+# GK — Gatekeeping
+#   One role controls access to a resource, system, or decision
+#   that another role needs.
+#   CRITICAL RISK: Bypass becomes the default; gating collapses.
+
+# BS — Boundary Spanning
+#   One role serves as translator/broker between two otherwise
+#   non-adjacent roles or knowledge domains.
+#   CRITICAL RISK: Information distorts in translation silently.
+
+
+# ─────────────────────────────────────────────────────────────
+# COMPLETE RELATIONSHIP TEMPLATE
+# ─────────────────────────────────────────────────────────────
+
+relationship:
+
+  # ── IDENTITY ────────────────────────────────────────────
+  meta:
+    relationship_id: "<string: unique slug e.g. 'pe-partner--portco-cfo'>"
+    version: "1.0"
+    last_reviewed: "<YYYY-MM-DD>"
+    review_owner: "<role responsible for keeping this current>"
+    status: "<draft | active | deprecated | under-review>"
+
+  roles:
+    role_a:
+      name: "<canonical role name>"
+      canonical_file: "<path to role's agent definition file>"
+      organizational_tier: "<executive | senior | mid | junior | external>"
+    role_b:
+      name: "<canonical role name>"
+      canonical_file: "<path to role's agent definition file>"
+      organizational_tier: "<executive | senior | mid | junior | external>"
+
+
+  # ── RELATIONSHIP CLASSIFICATION ──────────────────────────
+  classification:
+    primary_type: "<HD | PC | AC | CS | OG | DT | GK | BS>"
+    # Must be exactly one of the taxonomy codes above.
+
+    secondary_modifiers:
+      - "<additional type code if relationship has secondary characteristics>"
+      # Example: ["OG"] if an HD relationship also has oversight properties.
+
+    directionality: "<unidirectional | bidirectional | contextual>"
+    # contextual = varies by situation; document when in notes below.
+    directionality_notes: "<Required if contextual>"
+
+    team_topologies_mode: "<collaboration | x-as-a-service | facilitating>"
+    # collaboration     : Time-bounded joint discovery toward a shared goal.
+    # x-as-a-service    : One side delivers; the other side consumes.
+    # facilitating      : One side enables without owning delivery.
+
+    raci_mapping:
+      role_a_raci: "<R | A | C | I>"
+      role_b_raci: "<R | A | C | I>"
+      raci_notes: "<Note any items where RACI roles flip or are task-dependent>"
+      # R = Responsible (does the work)
+      # A = Accountable (final authority; only one per decision)
+      # C = Consulted (must be asked before action)
+      # I = Informed (notified after action)
+
+    rapid_mapping:
+      # Use for high-stakes joint decisions only.
+      # R = Recommend | A = Agree | P = Perform | I = Input | D = Decide
+      role_a_rapid: "<R | A | P | I | D (may hold multiple)>"
+      role_b_rapid: "<R | A | P | I | D>"
+      rapid_applies_to: "<which decision classes this mapping governs>"
+
+
+  # ── INFORMATION FLOW SCHEMA ──────────────────────────────
+  information_flows:
+    # Document each distinct information stream.
+    # One entry per distinct information type.
+    # Add as many flow entries as exist.
+
+    flows:
+      - flow_id: "flow-001"
+        label: "<human-readable name e.g. 'Matter status updates'>"
+
+        from_role: "<role_a | role_b>"
+        to_role: "<role_a | role_b>"
+        direction: "<push | pull | bilateral>"
+        # push     : Sender initiates.
+        # pull     : Receiver requests.
+        # bilateral: Both initiate.
+
+        content_type: "<data | analysis | decision | approval | alert | instruction | status | artifact | query | escalation>"
+
+        information_description: "<precise description of what information moves>"
+        # WEAK:   "Updates"
+        # STRONG: "Draft motion with tracked changes, marked with open
+        #          questions flagged [Q]. Sent with a decision memo
+        #          listing the three pending items Role A must decide."
+
+        format: "<free-text | structured-template | verbal | system-generated | email | memo | dashboard | meeting | async-message>"
+
+        trigger:
+          type: "<event-driven | scheduled | threshold | request-based>"
+          description: "<specific triggering condition>"
+          # WEAK:   "When needed"
+          # STRONG: "Within 24h of a court filing deadline appearing
+          #          on the matter calendar"
+
+        frequency:
+          baseline: "<ad-hoc | daily | weekly | per-milestone | continuous>"
+          surge_conditions: "<conditions under which frequency increases>"
+
+        confidentiality_level: "<public | internal | restricted | privileged | firewall-protected>"
+        retention_requirements: "<how long this information must be retained>"
+
+        quality_requirements:
+          completeness_standard: "<what 'complete' means for this information>"
+          accuracy_obligation: "<best-efforts | reasonable-professional-judgment | verified | warranted>"
+          latency_sla: "<maximum acceptable delay from trigger to delivery>"
+          format_conformance: "<must conform to a specific template? which?>"
+
+        failure_modes:
+          - "<string: what goes wrong when this flow fails or degrades>"
+          # Example: "Role B proceeds without current status, resulting
+          # in duplicated work or conflicting advice to the client."
+
+
+  # ── AUTHORITY BOUNDARY SCHEMA ────────────────────────────
+  authority_boundaries:
+    # For each decision class, document who owns it, who must be
+    # consulted, and under what conditions it escalates.
+
+    decision_classes:
+      - decision_class_id: "dc-001"
+        label: "<human-readable name>"
+        description: "<what decisions fall in this class>"
+
+        ownership:
+          primary_owner: "<role_a | role_b | joint | escalation-required>"
+          owner_rationale: "<why this role owns it: expertise | accountability | regulatory | contractual>"
+
+        consultation_required:
+          roles:
+            - "<role name>"
+          consultation_type: "<FYI | input-required | approval-required | veto-right>"
+
+        override_authority:
+          can_override: "<who can override the primary owner>"
+          override_conditions: "<precise conditions permitting override>"
+
+        escalation:
+          triggers:
+            - "<specific condition that removes ownership from primary owner>"
+          escalation_target: "<role_a | role_b | shared_superior | external_authority>"
+          escalation_protocol: "<how the escalation is initiated and documented>"
+
+        audit_trail_requirement: "<what documentation must exist after this decision>"
+
+    joint_decision_protocol:
+      applicable_to:
+        - "<decision class IDs requiring joint decision>"
+      process: |
+        # Step-by-step: who proposes, who reviews, how disagreement
+        # is surfaced, what the tiebreaker is.
+      tiebreaker: "<role_a | role_b | shared_superior | vote | documented-impasse>"
+      documentation_requirement: "<what must be documented for joint decisions>"
+
+    authority_gradient_assessment:
+      gradient_steepness: "<steep | moderate | shallow | peer>"
+      deference_risk: "<low | medium | high | critical>"
+      # critical = CRM-level concern; one party may not speak up
+      # even when safety/quality requires it.
+      deference_risk_rationale: "<why this rating was assigned>"
+      speak_up_protocol: |
+        # REQUIRED when gradient = steep or critical.
+        # Explicit mechanism for the lower-authority role to surface concerns.
+        # Example: "Role B has explicit standing to invoke 'structured concern'
+        # in any written communication without requiring prior approval.
+        # Concerns are logged separately from Role A's decisions."
+      gradient_notes: "<any additional context>"
+
+
+  # ── ESCALATION TRIGGERS ──────────────────────────────────
+  escalation_logic:
+
+    escalation_triggers:
+      - trigger_id: "esc-001"
+        label: "<human-readable name>"
+        condition: "<precise triggering condition>"
+        # IF-THEN structure preferred:
+        # "IF contract_value > $500K AND counterparty is non-US sovereign
+        #  AND Role B review has not been completed, THEN escalate."
+        trigger_type: "<threshold | event | time | exception | external-signal>"
+        initiating_role: "<which role detects and initiates the escalation>"
+        target_role: "<where escalation goes>"
+        urgency: "<immediate | within-N-hours | next-business-day | routine>"
+        escalation_action: "<what the initiating role must do>"
+        resolution_criteria: "<when is the escalation considered resolved>"
+        failure_to_escalate_consequence: "<what happens if this trigger is missed>"
+
+    de_escalation_triggers:
+      - trigger_id: "desc-001"
+        condition: "<when an escalated situation returns to routine handling>"
+        de_escalation_action: "<what changes when de-escalated>"
+
+    routing_bypass_conditions:
+      - condition: "<when normal routing should be bypassed entirely>"
+        bypass_target: "<where routing goes instead>"
+        bypass_rationale: "<why bypass is appropriate here>"
+
+
+  # ── COMMUNICATION NORMS ──────────────────────────────────
+  communication_norms:
+
+    register: "<formal | semi-formal | informal | technical | mixed>"
+    register_notes: "<e.g. 'Formal in written output; informal in working sessions'>"
+
+    primary_channels:
+      - channel: "<email | phone | in-person | async-message | meeting | system-generated | shared-workspace>"
+        use_case: "<when this channel is appropriate>"
+        response_sla: "<expected response time>"
+
+    preferred_meeting_cadence:
+      standing_meetings:
+        - "<e.g. 'Weekly matter review — 30 min'>"
+      ad_hoc_triggers:
+        - "<conditions that trigger an unscheduled touchpoint>"
+
+    language_conventions:
+      terminology_alignment: "<do both roles use the same vocabulary for shared concepts? Note divergences.>"
+      abstraction_level: "<what level of technical/domain depth is expected>"
+      shorthand_in_use:
+        - "<named conventions or abbreviations in active use>"
+
+    written_output_standards:
+      role_a_delivers_to_role_b:
+        format: "<expected format>"
+        length_norm: "<expected length>"
+        required_sections:
+          - "<section name>"
+      role_b_delivers_to_role_a:
+        format: "<expected format>"
+        length_norm: "<expected length>"
+        required_sections:
+          - "<section name>"
+
+
+  # ── FRICTION POINTS ──────────────────────────────────────
+  friction_points:
+    # Document recurring misalignments.
+    # Critical for agent design — predicts where routing will fail.
+
+    known_frictions:
+      - friction_id: "fr-001"
+        label: "<human-readable name>"
+        description: "<specific nature of the misalignment>"
+        # WEAK:   "They sometimes disagree."
+        # STRONG: "Role A optimizes for speed-to-close; Role B optimizes
+        #          for risk elimination. When timeline compresses below
+        #          72h, Role B's review cycle is the first thing pressured."
+
+        friction_type: "<incentive-misalignment | information-asymmetry | authority-ambiguity | priority-conflict | process-gap | cultural-difference | resource-competition>"
+        frequency: "<rare | occasional | frequent | structural>"
+        impact_severity: "<low | medium | high | critical>"
+
+        typical_resolution:
+          mechanism: "<how this friction is typically resolved in practice>"
+          resolution_owner: "<who usually drives resolution>"
+          unresolved_consequence: "<what happens when it is NOT resolved>"
+
+        agent_routing_implication: |
+          # REQUIRED: how should an agent system respond to this friction?
+          # WEAK:   "Escalate to supervisor."
+          # STRONG: "When timeline_to_close < 72h AND role_b_review_status
+          #          != 'complete': DO NOT default to either party's preference.
+          #          Surface conflict explicitly to human supervisor with a
+          #          structured conflict memo containing (1) Role A urgency
+          #          rationale, (2) Role B incomplete items with risk rating,
+          #          (3) options with risk/speed tradeoff assessment.
+          #          Block handoff until supervisor makes an explicit documented choice."
+
+
+  # ── INFORMATION FIREWALL ─────────────────────────────────
+  information_firewall:
+    firewall_applicable: false
+    # true | false — must be explicitly stated, not left blank.
+
+    firewall_type: "<ethical-screen | confidentiality-boundary | competitive-sensitivity | regulatory-barrier | none>"
+
+    if_applicable:
+      scope: "<what information is firewalled>"
+      trigger_conditions: "<when the firewall activates>"
+      enforcement_mechanism: "<how it is enforced procedurally and technically>"
+      breach_protocol: "<what happens if the firewall is breached>"
+      exceptions:
+        - "<documented exception with conditions>"
+
+
+  # ── AGENT ROUTING LOGIC ──────────────────────────────────
+  agent_routing:
+    # Executable specification for agent handoff and loop-in logic.
+    # Rules are evaluated in priority order. First match wins
+    # unless action_type = parallel_route.
+
+    routing_rules:
+      - rule_id: "rt-001"
+        label: "<human-readable name>"
+        priority: 1
+        # Lower number = evaluated first.
+
+        condition:
+          context_signal: "<what input triggers evaluation of this rule>"
+          evaluation_logic: |
+            # The IF condition — precise enough to evaluate without
+            # human interpretation.
+            # Example: "IF request_type = 'contract_review'
+            #            AND contract_value > $500,000
+            #            AND counterparty_jurisdiction = 'non-US'"
+
+        action:
+          route_to: "<role_a | role_b | both | escalate | hold>"
+          action_type: "<handoff | loop_in | notify | block | parallel_route>"
+          action_description: "<what the routing action actually does>"
+          information_to_transfer: "<what context must accompany the handoff>"
+          handoff_format: "<format of the handoff package>"
+
+        fallback:
+          condition: "<what triggers the fallback>"
+          fallback_action: "<what happens instead>"
+
+    default_routing:
+      unmatched_request_handler: "<who receives requests that match no routing rule>"
+      ambiguity_protocol: "<how the agent handles genuine routing ambiguity>"
+      # Example: "Surface to human supervisor with decision log."
+
+    loop_in_rules:
+      - condition: "<when both roles must be active simultaneously>"
+        loop_in_rationale: "<why both are needed>"
+        loop_in_duration: "<how long both remain active>"
+        exit_condition: "<when one role drops back out>"
+
+    handoff_package_schema:
+      # Standard structure for any information handed off between these roles.
+      required_fields:
+        - field: "request_context"
+          description: "Full context of the original request or situation"
+        - field: "work_completed"
+          description: "Summary of what has been done before handoff"
+        - field: "open_questions"
+          description: "Explicitly flagged unresolved questions for receiving role"
+        - field: "constraints"
+          description: "Deadlines, resource limits, confidentiality restrictions"
+        - field: "decision_required"
+          description: "Specific decision or action requested of receiving role"
+        - field: "escalation_flag"
+          description: "Whether this handoff is an escalation; urgency level"
+      optional_fields:
+        - field: "prior_exchanges"
+          description: "Relevant history of prior interactions on this matter"
+        - field: "third_party_context"
+          description: "Relevant external parties, their positions, sensitivities"
+
+
+  # ── RELATIONSHIP HEALTH METRICS ──────────────────────────
+  health_metrics:
+    positive_indicators:
+      - "<string: observable signal that relationship is functioning well>"
+      # Example: "Role B review cycle consistently < 48h"
+
+    degradation_signals:
+      - "<string: observable signal that relationship is degrading>"
+      # Example: "Role A bypassing Role B on contracts > $100K"
+      # Example: "Information flow frequency drops below baseline without
+      #           documented reason"
+
+    review_triggers:
+      - "<condition that should prompt a relationship definition review>"
+      # Example: "Three or more friction events within 30 days"
+      # Example: "Organizational restructuring affecting either role"
+
+
+# ─────────────────────────────────────────────────────────────
+# TEMPLATE VALIDATION CHECKLIST
+# ─────────────────────────────────────────────────────────────
+
+validation_checklist:
+
+  tier_1_minimum_viable__fails_if_any_missing:
+    - "Both roles identified by canonical name, not informal title"
+    - "Primary relationship type classified using the taxonomy codes"
+    - "At least one information flow documented with trigger, format, and SLA"
+    - "At least one decision class documented with a named primary owner"
+    - "At least one escalation trigger documented with a specific condition"
+    - "Directionality specified (unidirectional / bidirectional / contextual)"
+    - "Authority gradient steepness assessed"
+    - "Firewall applicability explicitly stated (even if 'none')"
+
+  tier_2_functional__agent_can_route:
+    - "All major information flows documented (not just the obvious ones)"
+    - "Triggers are specific conditions, not vague states"
+    - "Decision classes cover: routine decisions, high-value decisions, exception/crisis decisions"
+    - "RAPID mapping completed for at least one high-stakes decision class"
+    - "Friction points documented with specific failure modes and routing implications"
+    - "Communication norms include channel, register, and response SLA"
+    - "Routing rules written in evaluable IF-THEN structure"
+    - "Handoff package schema defined"
+
+  tier_3_expert_grade__agent_handles_edge_cases:
+    - "Surge conditions documented for all flows (what changes under pressure?)"
+    - "Deference risk explicitly rated; speak-up protocol provided where applicable"
+    - "De-escalation triggers documented (not just escalation triggers)"
+    - "Routing bypass conditions documented"
+    - "Failure analysis completed for each information flow"
+    - "Relationship health metrics defined — positive indicators AND degradation signals"
+    - "Joint decision protocol includes a tiebreaker"
+    - "Information firewall configuration operationally specific"
+    - "Every friction point has an explicit 'agent_routing_implication'"
+    - "Template has a named review owner and review trigger list"
+
+
+# ─────────────────────────────────────────────────────────────
+# ANTI-PATTERN CATALOG
+# ─────────────────────────────────────────────────────────────
+
+anti_patterns:
+  org_chart_stub:
+    description: "Contains role names and a type label but zero routing logic.
+      An agent reading this knows nothing about WHAT flows where, WHEN
+      escalation occurs, or HOW to handle edge cases."
+    detection: "relationship_id exists but information_flows is empty"
+
+  vague_triggers:
+    description: "Triggers use language like 'when something important comes up'
+      or 'when needed.' Not evaluable by an agent."
+    detection: "Any trigger.description without a specific measurable condition"
+
+  missing_failure_analysis:
+    description: "Information flows are documented but have no failure_modes field.
+      An agent cannot enforce or detect degradation of flows it cannot monitor."
+    detection: "Any flow entry with empty failure_modes"
+
+  authority_without_gradient:
+    description: "Authority boundaries are defined but authority_gradient_assessment
+      is missing. The most important field for detecting deference failures."
+    detection: "decision_classes populated but authority_gradient_assessment is empty"
+
+  friction_without_routing_implication:
+    description: "Friction points are documented but have no agent_routing_implication.
+      The entire value of documenting friction is knowing how an agent should respond."
+    detection: "Any friction entry with empty agent_routing_implication"
+
+  no_handoff_package_schema:
+    description: "Routing rules exist but no handoff_package_schema. An agent
+      executing routing rules with no handoff spec produces inconsistent,
+      context-losing transfers."
+    detection: "routing_rules populated but handoff_package_schema is empty"
+
+  static_relationship_definition:
+    description: "No review_owner, review_triggers, or health_metrics.
+      Relationships evolve. A definition with no maintenance mechanism
+      becomes actively misleading over time."
+    detection: "health_metrics and meta.review_owner are empty"

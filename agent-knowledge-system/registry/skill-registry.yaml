@@ -1,0 +1,193 @@
+# ============================================================
+# SKILL REGISTRY
+# Flat queryable index of all skill definitions.
+# Query by: domain | type | complexity | used_by_roles
+#
+# ADD A SKILL: append an entry here whenever a new skill
+# file is created under skills/[domain]/[skill-slug].skill.yaml
+#
+# SKILL TYPES (from config/skill-types.enum.yaml):
+#   analytical | interpersonal | judgment-heuristic |
+#   procedural-technical | domain-expertise | communication-persuasion
+# ============================================================
+
+skills:
+
+# ── FINANCE ──────────────────────────────────────────────────
+
+  - id: lbo-modeling
+    display_name: "LBO Modeling"
+    domain: finance
+    type: analytical
+    complexity: expert
+    path: skills/finance/lbo-modeling.skill.yaml
+    used_by_roles: [private-equity-partner, investment-banker]
+    status: stub
+
+  - id: dcf-valuation
+    display_name: "DCF Valuation"
+    domain: finance
+    type: analytical
+    complexity: practitioner
+    path: skills/finance/dcf-valuation.skill.yaml
+    used_by_roles: [private-equity-partner, investment-banker, cfo]
+    status: stub
+
+  - id: deal-structuring
+    display_name: "Deal Structuring"
+    domain: finance
+    type: judgment-heuristic
+    complexity: expert
+    path: skills/finance/deal-structuring.skill.yaml
+    used_by_roles: [private-equity-partner, investment-banker, ma-attorney]
+    status: stub
+
+  - id: capital-allocation
+    display_name: "Capital Allocation"
+    domain: finance
+    type: judgment-heuristic
+    complexity: expert
+    path: skills/finance/capital-allocation.skill.yaml
+    used_by_roles: [private-equity-partner, cfo]
+    status: stub
+
+  - id: management-assessment
+    display_name: "Management Team Assessment"
+    domain: finance
+    type: judgment-heuristic
+    complexity: expert
+    path: skills/finance/management-assessment.skill.yaml
+    used_by_roles: [private-equity-partner, investment-banker]
+    status: stub
+
+  - id: commercial-due-diligence
+    display_name: "Commercial Due Diligence"
+    domain: finance
+    type: analytical
+    complexity: expert
+    path: skills/finance/commercial-due-diligence.skill.yaml
+    used_by_roles: [private-equity-partner, investment-banker]
+    status: stub
+
+  - id: board-governance
+    display_name: "Board Governance"
+    domain: finance
+    type: interpersonal
+    complexity: expert
+    path: skills/finance/board-governance.skill.yaml
+    used_by_roles: [private-equity-partner, cfo, general-counsel]
+    status: stub
+
+  - id: lp-communication
+    display_name: "LP Communication"
+    domain: finance
+    type: communication-persuasion
+    complexity: practitioner
+    path: skills/finance/lp-communication.skill.yaml
+    used_by_roles: [private-equity-partner]
+    status: stub
+
+# ── LEGAL ─────────────────────────────────────────────────────
+
+  - id: purchase-agreement-negotiation
+    display_name: "Purchase Agreement Negotiation"
+    domain: legal
+    type: interpersonal
+    complexity: expert
+    path: skills/legal/purchase-agreement-negotiation.skill.yaml
+    used_by_roles: [ma-attorney, private-equity-partner]
+    status: stub
+
+  - id: reps-and-warranties
+    display_name: "Reps & Warranties — Drafting and Negotiation"
+    domain: legal
+    type: domain-expertise
+    complexity: expert
+    path: skills/legal/reps-and-warranties.skill.yaml
+    used_by_roles: [ma-attorney, general-counsel]
+    status: stub
+
+  - id: due-diligence-legal
+    display_name: "Legal Due Diligence"
+    domain: legal
+    type: procedural-technical
+    complexity: practitioner
+    path: skills/legal/due-diligence-legal.skill.yaml
+    used_by_roles: [ma-attorney, general-counsel]
+    status: stub
+
+  - id: regulatory-compliance
+    display_name: "Regulatory Compliance"
+    domain: legal
+    type: domain-expertise
+    complexity: expert
+    path: skills/legal/regulatory-compliance.skill.yaml
+    used_by_roles: [general-counsel, cfo]
+    status: stub
+
+# ── OPERATIONS ────────────────────────────────────────────────
+
+  - id: operational-turnaround
+    display_name: "Operational Turnaround"
+    domain: operations
+    type: judgment-heuristic
+    complexity: expert
+    path: skills/operations/operational-turnaround.skill.yaml
+    used_by_roles: [coo, private-equity-partner]
+    status: stub
+
+  - id: ebitda-optimization
+    display_name: "EBITDA Optimization"
+    domain: operations
+    type: analytical
+    complexity: expert
+    path: skills/operations/ebitda-optimization.skill.yaml
+    used_by_roles: [coo, private-equity-partner, cfo]
+    status: stub
+
+# ── CROSS-DOMAIN ──────────────────────────────────────────────
+
+  - id: executive-negotiation
+    display_name: "Executive Negotiation"
+    domain: cross-domain
+    type: interpersonal
+    complexity: expert
+    path: skills/cross-domain/executive-negotiation.skill.yaml
+    used_by_roles: [private-equity-partner, ma-attorney, cfo, general-counsel, coo]
+    status: stub
+
+  - id: stakeholder-management
+    display_name: "Stakeholder Management"
+    domain: cross-domain
+    type: interpersonal
+    complexity: practitioner
+    path: skills/cross-domain/stakeholder-management.skill.yaml
+    used_by_roles: [private-equity-partner, cfo, coo, general-counsel, management-consultant]
+    status: stub
+
+  - id: crisis-communication
+    display_name: "Crisis Communication"
+    domain: cross-domain
+    type: communication-persuasion
+    complexity: expert
+    path: skills/cross-domain/crisis-communication.skill.yaml
+    used_by_roles: [cfo, coo, general-counsel, private-equity-partner]
+    status: stub
+
+  - id: board-communication
+    display_name: "Board-Level Communication"
+    domain: cross-domain
+    type: communication-persuasion
+    complexity: expert
+    path: skills/cross-domain/board-communication.skill.yaml
+    used_by_roles: [private-equity-partner, cfo, coo, general-counsel, cto]
+    status: stub
+
+  - id: structured-problem-solving
+    display_name: "Structured Problem Solving"
+    domain: cross-domain
+    type: analytical
+    complexity: practitioner
+    path: skills/cross-domain/structured-problem-solving.skill.yaml
+    used_by_roles: [management-consultant, private-equity-partner, cfo, coo]
+    status: stub

@@ -1,0 +1,62 @@
+# ============================================================
+# MASTER INDEX — Agent Knowledge System
+# Version: 1.0
+#
+# PURPOSE: Single entry point for all programmatic queries.
+# Every file, role, skill, and persona is catalogued here.
+# Agents and tooling query these indexes first rather than
+# scanning the directory tree.
+#
+# UPDATE POLICY: Increment stats counters and update
+# last_updated whenever any registry sub-file changes.
+# ============================================================
+
+system_name: "Professional Agent Knowledge System"
+system_version: "1.0.0"
+last_updated: "2026-05-12"
+
+indexes:
+  roles:          registry/role-registry.yaml
+  skills:         registry/skill-registry.yaml
+  personas:       registry/persona-registry.yaml
+  graph:          registry/relationship-graph.yaml
+
+templates:
+  agent_profile:    agents/_templates/agent-profile.template.yaml
+  persona_variant:  agents/_templates/persona-variant.template.yaml
+  skill_master:     skills/_templates/skill-master.template.yaml
+  knowledge_tree:   knowledge-trees/_templates/knowledge-tree.template.yaml
+  relationship:     relationships/_templates/relationship.template.yaml
+
+config:
+  skill_types:      config/skill-types.enum.yaml
+  industries:       config/industries.enum.yaml
+  seniority_levels: config/seniority-levels.enum.yaml
+
+stats:
+  total_roles: 0
+  total_skills: 0
+  total_variants: 0
+  total_knowledge_trees: 0
+  total_relationships: 0
+  industries: []
+
+# ─────────────────────────────────────────────────────────────
+# SYSTEM DESIGN NOTES (preserve across sessions)
+# ─────────────────────────────────────────────────────────────
+
+design_principles:
+  - "Skills are global and referenced by ID — never nested inside agent profiles"
+  - "Knowledge trees exist at two levels: shared global ktrees + role-local framing"
+  - "Persona variants use delta-override inheritance — only declare changes from base archetype"
+  - "Routing triggers on variants: hard_triggers (deterministic) + soft_triggers (weighted)"
+  - "Relationship files must rate authority gradient and provide speak-up protocol when steep"
+  - "Variance points inside knowledge tree nodes are first-class — not footnotes"
+  - "Every template has an embedded validation checklist and anti-pattern catalog"
+
+quality_bar:
+  skill_minimum: "HOW + WHEN + WHEN NOT — not just WHAT"
+  knowledge_tree_minimum: "Reaches L5 in 30%+ of branches; contested nodes have variance_points"
+  persona_variant_minimum: "Behavioral delta map with sourced evidence — not a biography"
+  relationship_minimum: "Routing rules in evaluable IF-THEN; handoff package schema defined"
+  agent_profile_minimum: "Captures insider nuance and impostor tells — not just credentials"
